@@ -19,3 +19,4 @@ django-termsandconditions
 wagalytics
 wagtail-metadata
 wagtail-modelchooser
+gunicorn
