@@ -1,0 +1,26 @@
+{% load static menu_tags shop_tags %}
+{% cart %}
+
+<ul class="uk-navbar-nav">
+    {% for item in menu_items %}
+    <li><a href="{{ item.href }}">{{ item.text }}</a></li>
+    {% endfor %}
+    <li class="cart">
+        <a href="/cart" uk-icon="icon: cart">Cart <span class="uk-badge">{{cart.products|length}}</span></a>
+    </li>
+    <li>
+        {% if request.user.is_authenticated %}
+        <a href="/dashboard">Welcome {{ request.user.username|upper }}</a>
+        <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/user/profile">Profile</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <a href="{% url 'account_login' %}">Sign In/ Register</a>
+        {% endif %}
+    </li>
+</ul>

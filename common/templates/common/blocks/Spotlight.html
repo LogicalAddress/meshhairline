@@ -1,0 +1,37 @@
+{% load i18n wagtailcore_tags static wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% if value.title %}
+
+<section class="uk-container">
+    <section class="uk-section uk-padding-small uk-child-width-1-2@m" uk-grid>
+        <div>
+            {% if value.heading %}
+            <h2 class="uk-heading-primary myhead2">{% firstof value.heading "Spotlight" %}</h2>
+            {% endif %}
+            <h3 style="font-size: 1.375rem;font-weight: 800;letter-spacing: -.7px;padding-top: 10px;">{{ value.title }}</h3>
+            <p>{{ value.biography|richtext }}</p>
+            {% if value.page.url %}
+            <p>
+                <a style="text-decoration: none; color: white;" class="uk-button button-def" href="{{ value.page.url }}">Read more</a>
+            </p>
+            {% endif %}
+        </div>
+        <div class="uk-width-1-2@m">
+        {% if value.embed %}
+            <div class="responsive-object" style="min-height: {% firstof value.video_min_height '300px' %};">
+            {% embed value.embed.url %}
+            </div>
+        {% elif value.photo %}
+            <div class="uk-card uk-box-shadow-hover-large uk-position-relative fadeaway">
+                <div class="uk-card-media-top">
+                    {% image value.photo width-1000 %}
+                </div>
+            </div>
+        {% else %}
+        {% endif %}
+        </div>
+    </section>
+</section>
+
+{% endif %}

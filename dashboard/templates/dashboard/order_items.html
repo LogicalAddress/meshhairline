@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags humanize %}
+{% load wagtailroutablepage_tags %}
+
+{% block body_class %}template-dashboard{% endblock %}
+
+{% block content %}
+<section class="uk-container uk-padding-large">
+    <section>
+        <h3>Order #{{order.title}}</h3>
+        <table class="uk-table">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price ({{settings.shop.ShopSettings.default_currency_symbol}})</th>
+                    <th>Quantity</th>
+                    <th>Total ({{settings.shop.ShopSettings.default_currency_symbol}})</th>
+                    <th>Payment Type</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{item.title}}</td>
+                    <td>{{item.price|intcomma}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.total|intcomma}}</td>
+                    <td>{{item.payment_gateway|title}}</td>
+                    <td>{{item.created_at}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h1 class="uk-align-right">
+            Total: {{settings.shop.ShopSettings.default_currency_symbol}} {{order.total|intcomma}}
+        </h1>
+    </section>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meshhairline
+  namespace: default
+  labels:
+    app: meshhairline
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meshhairline
+  template:
+    metadata:
+      labels:
+        app: meshhairline
+    spec:
+      containers:
+        - name: meshhairline
+          image: logicaladdress/meshhairline:$COMMIT_SHA1
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: DATABASE_BACKEND
+              value: $DATABASE_BACKEND
+            - name: DATABASE_HOST
+              value: $DATABASE_HOST
+            - name: DATABASE_NAME
+              value: $DATABASE_NAME
+            - name: DATABASE_PASS
+              value: $DATABASE_PASS
+            - name: DATABASE_USER
+              value: $DATABASE_USER
+            - name: DATABASE_PORT
+              value: "$DATABASE_PORT"
+            - name: AWS_ACCESS_KEY_ID
+              value: $AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              value: $AWS_SECRET_ACCESS_KEY
+            - name: AWS_STORAGE_BUCKET_NAME
+              value: $AWS_STORAGE_BUCKET_NAME
+            - name: EMAIL_HOST
+              value: $EMAIL_HOST
+            - name: EMAIL_PORT
+              value: "$EMAIL_PORT"
+            - name: EMAIL_HOST_PASSWORD
+              value: $EMAIL_HOST_PASSWORD
+            - name: EMAIL_HOST_USER
+              value: $EMAIL_HOST_USER
+            - name: DEFAULT_FROM_EMAIL
+              value: $DEFAULT_FROM_EMAIL
+            - name: PAYSTACK_PUBLIC_KEY
+              value: $PAYSTACK_PUBLIC_KEY
+            - name: PAYSTACK_SECRET_KEY
+              value: $PAYSTACK_SECRET_KEY

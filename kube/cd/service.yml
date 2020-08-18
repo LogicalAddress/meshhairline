@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: meshhairline
+  namespace: default
+  labels:
+    app: meshhairline
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "false"
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+    # service.beta.kubernetes.io/do-loadbalancer-algorithm: "round_robin"
+    # service.beta.kubernetes.io/do-loadbalancer-tls-ports: "443"
+    # service.beta.kubernetes.io/do-loadbalancer-certificate-id: "XXXXXXXXXXXX"
+    # service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http
+      protocol: TCP
+    # - name: https
+    #   protocol: TCP
+    #   port: 443
+    #   targetPort: 8080
+  selector:
+    app: meshhairline

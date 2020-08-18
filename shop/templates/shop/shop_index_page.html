@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n wagtailcore_tags static wagtailimages_tags %}
+
+{% block body_class %}template-shopindexpage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.0.16/default/snipcart.css" />
+{% endblock extra_css %}
+
+
+{% block extra_js %}
+<script src="https://cdn.snipcart.com/themes/v3.0.16/default/snipcart.js"></script>
+{% endblock extra_js %}
+
+
+{% block content %}
+
+<div id="snipcart" data-api-key="{{ settings.shop.SnipcartSettings.api_key }}" hidden></div>
+<section class="home">
+    <section id="bestsell" class="grid-container uk-section padding-1 uk-padding-remove-horizontal">
+        <h2 class="uk-text-uppercase uk-text-bold">Store</h2>
+        <div class="uk-grid-small uk-child-width-1-3@m uk-child-width-1-3@s uk-child-width-1-1" uk-grid>
+            {% for product in products %}
+            <a class="uk-link-reset" href="{{ product.get_url }}">
+                <div class="uk-card uk-box-shadow-hover-large">
+                    <div class="uk-card-media-top">
+                        {% image product.image fill-1000x500 as tmp_image %}
+                        <img src="{{ tmp_image.url }}" alt="" />
+                    </div>
+                    <div class="uk-card-body uk-text-center">
+                        <p class="uk-h4 uk-text-left">{{ product.title }}</p>
+                        <p class="uk-margin-remove uk-text-left">{{ product.price }}</p>
+                        <p>{{ product.short_description }}</p>
+                        <button href="#" class="button-def-cart uk-button">Add To Cart</button>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</section>
+
+{% endblock content %}
+

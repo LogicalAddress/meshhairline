@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags %}
+
+{% block body_class %}template-userprofile{% endblock %}
+
+{% block content %}
+
+<section class="uk-container uk-padding-large">        
+    <section class="uk-section uk-padding-small uk-child-width-1-2@m" uk-grid>
+        <div>
+            <h1>User Profile</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <div style="clear:both;"></div>
+                <input class="uk-button button-def" type="submit" value="Update">
+            </form>
+        </div>
+    </section>
+</section>
+
+{% endblock content %}

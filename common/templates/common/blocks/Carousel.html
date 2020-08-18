@@ -1,0 +1,21 @@
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+<div id="slider" style="padding-left: -40px !important; padding-right: -40px !important;" class="orbit" role="region" aria-label="Creative Spaces" data-orbit data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;">
+    <ul class="orbit-container uk-padding-remove">
+        <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
+        <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+        {% for slide in value.items %}
+        <li class="{% if slide.is_active %}is-active{% endif %} orbit-slide">
+            {% if slide.display_type == "image" %}
+                {% image slide.image fill-1500x900 class="orbit-image" %}
+                <figcaption class="orbit-caption">{{slide.overlay_text}}</figcaption>
+            {% elif slide.display_type == "text" %}
+            <h3 class="text-left" style="font-size: 50px;">{{slide.overlay_text}}</h3>
+            <p class="text-left">{{ slide.description|richtext }}</p>
+            {% else %}
+                <noup></noup>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>

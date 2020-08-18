@@ -1,0 +1,33 @@
+{% load static menu_tags wagtailcore_tags %}
+
+<footer>
+    {% if value.body %}
+    <div class="uk-width-5-6@m uk-grid-collapse uk-margin-auto uk-margin-remove uk-text-center uk-child-width-1-1@m" uk-scrollspy="cls: uk-animation-slide-top; target: *; delay: 100; repeat: true">
+        {% include_block value.body %}
+    </div>
+    {% endif %}
+    <div class="uk-width-5-6@m uk-grid-collapse uk-margin-auto uk-margin-remove uk-flex-between bottom" uk-grid>
+        <div uk-scrollspy="cls: uk-animation-slide-bottom; target: *; delay: 100; repeat: true">
+            <p class="colwhite">{{ settings.common.WebsiteSettings.site_name|title }} &copy; {% now 'Y' %}</p>
+        </div>
+        <div>
+            <div class="uk-column">
+                {% flat_menu 'footer' show_menu_heading=False template="menus/footer.html" %}
+            </div>
+            <div class="uk-column">
+            {% if settings.common.WebsiteSettings.twitter_link %}
+            <a href="{{ settings.common.WebsiteSettings.twitter_link }}" class="uk-icon-button uk-margin-small-right" target="_blank" uk-icon="twitter"></a>
+            {% endif %}
+            {% if settings.common.WebsiteSettings.facebook_link %}
+            <a href="{{ settings.common.WebsiteSettings.facebook_link }}" class="uk-icon-button uk-margin-small-right" target="_blank" uk-icon="facebook"></a>
+            {% endif %}
+            {% if settings.common.WebsiteSettings.instagram_link %}
+            <a href="{{ settings.common.WebsiteSettings.instagram_link }}" class="uk-icon-button uk-margin-small-right" target="_blank" uk-icon="instagram"></a>
+            {% endif %}
+            {% if settings.common.WebsiteSettings.youtube_link %}
+            <a href="{{ settings.common.WebsiteSettings.youtube_link }}" class="uk-icon-button uk-margin-small-right" target="_blank" uk-icon="youtube"></a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</footer>

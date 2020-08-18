@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+{% endblock extra_css %}
+
+{% block content %}
+
+<section id="home">
+    {% for block in page.body %}
+        {% if block.block_type == 'embed' or block.block_type == 'image' %}
+            <section class="responsive-object uk-container">
+                {% include_block block %}
+            </section>
+        {% elif block.block_type == 'paragraph' %}
+            <section class="uk-container">
+                {% include_block block %}
+            </section>
+        {% else %}
+            <section>
+                {% include_block block %}
+            </section>
+        {% endif %}
+    {% endfor %}
+</section>
+
+{% endblock content %}

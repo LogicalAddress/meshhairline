@@ -1,0 +1,9 @@
+{% load static menu_tags %}
+
+<div class="uk-navbar-dropdown">
+    <ul class="uk-nav uk-navbar-dropdown-nav">
+        {% for sub_item in item.sub_menu.items %}
+        <li class="{{ sub_item.active_class }}"><a href="{{ sub_item.href }}">{{ sub_item.text }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

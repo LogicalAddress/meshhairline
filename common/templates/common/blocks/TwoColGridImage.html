@@ -1,0 +1,37 @@
+{% load i18n wagtailcore_tags static wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% if value.items %}
+<section class="uk-container subs text text-center grid-container uk-margin-large-bottom">
+    {% if value.title %}
+    <h1 class="uk-text-bold">{{value.title}}</h1>
+    {% endif %}
+    {% if value.section_text and value.section_text != 'None' %}
+    <p class="lead">{{ value.section_text }}</p>
+    {% endif %}
+    <div class="uk-child-width-1-2@m" uk-grid>
+        {% for item in value.items %}
+        {% if item.embed %}
+        <div class="responsive-object" style="min-height: {% firstof value.video_min_height '300px' %};">
+            {% embed item.embed.url %}
+        </div>
+        {% elif item.picture %}
+            <a class="uk-link-reset" href="{{ item.url }}">
+                <div class="uk-card uk-box-shadow-hover-large uk-position-relative fadeway">
+                    <div class="uk-card-media-top">
+                        {% image item.picture width-1000 %}
+                    </div>
+                    {% if item.vertical_text %}
+                    <span class="vertext">
+                        <!-- 20%&nbsp;OFF --> 
+                        {{ item.vertical_text }}
+                    </span>
+                    {% endif %}
+                </div>
+            </a>
+        {% else %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}

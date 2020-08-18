@@ -1,0 +1,36 @@
+{% load i18n wagtailcore_tags static wagtailimages_tags humanize %}
+
+
+{% if value.products %}
+<section id="bestsell" class="uk-container uk-padding-remove-horizontal">
+    <h2 class="uk-text-uppercase uk-text-bold">Featured Products</h2>
+    {% if value.section_text and value.section_text != 'None' %}
+    <p class="lead">{{ value.section_text }}</p>
+    {% endif %}
+    <div class="uk-grid-small uk-child-width-1-3@m uk-child-width-1-2@s uk-child-width-1-1" uk-grid>
+        {% for product in value.products %}
+        <a class="uk-link-reset" href="{{ product.link }}">
+            <div class="uk-card uk-box-shadow-hover-large fadeaway">
+                <div class="uk-card-media-top">
+                    {% image product.picture width-1000 %}
+                </div>
+                <div class="uk-card-body uk-text-center">
+                    <p class="uk-h4 uk-text-right" style="margin-right: 10px;">{{ product.title }}</p>
+                    <p class="uk-margin-remove uk-text-right">{{settings.shop.ShopSettings.default_currency_symbol}}{{ product.amount|intcomma }}</p>
+                    <form action="{{ product.link }}?action=cart_add">
+                        <button class="button-def-cart uk-button">Add to Cart</button>
+                    </form>
+                </div>
+                {% if product.discount %}
+                <span class="vertext">
+                    <!-- 20%&nbsp;OFF -->
+                    {{ product.discount }}
+                </span>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    <hr class="uk-width-1-1@m uk-margin-small-top">
+</section>
+{% endif %}

@@ -1,0 +1,41 @@
+{% load static menu_tags shop_tags %}
+{% cart %}
+<div uk-sticky="sel-target: .uk-navbar-container; show-on-up: true; animation: uk-animation-slide-top; cls-active: uk-navbar-sticky;">
+    <div id="topbar" class="uk-visible@m">
+        {% if value.url %}
+        <a href="{{value.url}}" class="uk-label trial uk-flex uk-flex-middle uk-position-left"><span>{% firstof value.button_text "Find out even more.." %}</span></a>
+        {% endif %}
+        <nav class="uk-navbar-container grid-container uk-background-secondary" uk-navbar>
+            <div class="nav-overlay uk-navbar-right">
+                <!-- <a class="uk-navbar-toggle col-white" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#" uk-tooltip="Search"></a> -->
+                {% flat_menu 'header-secondary' show_menu_heading=False template="menus/header_secondary.html" sub_menu_templates="header_secondary_level_2.html" %}
+            </div>
+
+            <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+                <div class="uk-navbar-item uk-width-expand">
+                    <form class="uk-search uk-search-navbar uk-width-1-1">
+                        <input class="uk-search-input" type="search" placeholder="Search..." autofocus />
+                    </form>
+                </div>
+
+                <a class="uk-navbar-toggle col-white" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+            </div>
+        </nav>
+    </div>
+    {% if value.show_main_menu %}
+    <nav class="uk-navbar-container grid-container" uk-navbar="dropbar: true;" style="position: relative; z-index: 980;">
+        <div class="uk-navbar-left uk-width-1-1@m uk-margin-remove" uk-grid>
+            <a class="uk-navbar-item uk-logo uk-width-auto" href="/"><img src="{% static 'img/logo.png' %}" alt="" /></a>
+            {% main_menu template='menus/main_menu.html' %}
+        </div>
+        <div class="uk-navbar-right uk-hidden@m">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#" uk-icon="icon: cart"><span class="uk-badge">{{cart.products|length}}</span></a>
+                </li>
+                <li><a class="uk-navbar-toggle" uk-navbar-toggle-icon href="#" uk-toggle="target: #offcanvas-push"></a></li>
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+</div>

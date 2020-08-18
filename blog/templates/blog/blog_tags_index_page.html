@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags static wagtailimages_tags %}
+
+{% block body_class %}template-blogtagsindexpage{% endblock %}
+
+{% block content %}
+<section id="home">
+    <section id="cart" class="uk-container">
+    <h1 class="uk-heading-primary myhead2 uk-margin-large-bottom">{{ page.title }}</h1>
+    <div class="intro">{{ page.intro|richtext }}</div>
+
+    <div class="uk-child-width-1-3@m uk-padding-small" uk-grid>
+        <div id="desc" class="uk-width-2-3@m">
+            <h4 class="uk-card-title uk-text-bold">
+                {% if request.GET.tag|length %}
+                    <h4>Showing pages tagged "{{ request.GET.tag }}"</h4>
+                {% endif %}
+            </h4>
+            <hr class="uk-width-1-1@m uk-margin-small-top">
+            {% for post in blogpages %}
+            <div class="uk-card uk-grid-collapse uk-child-width-1-1@s uk-box-shadow-hover-large uk-padding-small" uk-grid>
+                <div class="uk-grid-small uk-child-width-1-3@m uk-child-width-1-3@s uk-child-width-1-1" uk-grid>
+                    <div>
+                        <h2 style="font-size: 1.375rem;font-weight: 800;line-height: 1.09;letter-spacing: -.7px; margin-bottom:0px;"><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+                        <!-- <h3>Admin</h3> -->
+                        <p style="margin-top: 1px;">{{ post.specific.date|date:"D d M Y" }}</p>
+                    </div>
+                    <p style="color: #777;">{{ post.specific.intro }}</p>
+                    {% image post.specific.featured_image max-800x600 as temp_image %}
+                    <img src="{{ temp_image.url }}" alt="">
+                </div>
+            </div>
+            <hr class="uk-width-1-1@m uk-margin-small-top">
+            {% endfor %}
+        </div>
+        <div id="tech-spec">
+            <h4 class="uk-card-title uk-text-bold">Technical Specifications</h4>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-expand uk-text-bold">Guarantee</div>
+                <div>3 years</div>
+            </div>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-expand uk-text-bold">Weight</div>
+                <div>2.2kg</div>
+            </div>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-expand uk-text-bold">Dimensions</div>
+                <div>38 x 17 x 11 cm</div>
+            </div>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-expand uk-text-bold">Output</div>
+                <div>230v 20hz</div>
+            </div>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-expand uk-text-bold">EAN</div>
+                <div>0383730122793</div>
+            </div>
+        </div>
+    </div>
+    
+    </section>
+</section>
+{% endblock %}

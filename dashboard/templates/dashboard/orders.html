@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags humanize %}
+{% load wagtailroutablepage_tags %}
+
+{% block body_class %}template-dashboard{% endblock %}
+
+{% block content %}
+<section class="uk-container uk-padding-large">
+    <section>
+        <h3>Orders</h3>
+        <table class="uk-table">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th>Ref</th>
+                    <th>Items</th>
+                    <th>Products</th>
+                    <th>Amount ({{settings.shop.ShopSettings.default_currency_symbol}})</th>
+                    <th>Payment Ref</th>
+                    <th>Payment Type</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in orders %}
+                <tr>
+                    <td><a href="{% routablepageurl page 'order' pk=item.pk %}">{{item.title}}</a></td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.unique_items}}</td>
+                    <td>{{item.total|intcomma}}</td>
+                    <td>{{item.ref}}</td>
+                    <td>{{item.payment_gateway|title}}</td>
+                    <td>{{item.created_at}}</td>
+                    <td><a href="{% routablepageurl page 'order' pk=item.pk %}">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,7 @@
+{% load static menu_tags %}
+
+<ul class="uk-navbar-nav">
+    {% for item in menu_items %}
+    <li><a class="themelink" href="{{ item.href }}">{{ item.text }}</a></li>
+    {% endfor %}
+</ul>

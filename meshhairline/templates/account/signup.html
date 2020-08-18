@@ -1,0 +1,19 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+
+<div id="cart" class="uk-container uk-padding-small">
+    <h1 class="uk-heading-primary myhead2 uk-margin-large">{% trans "Sign Up" %}</h1>
+
+<p class="lead">{% blocktrans %}Already have an account? Then please <a class="themelink" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+  {% crispy form  %}
+  {% if redirect_field_value %}
+  <!-- <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" /> -->
+  {% endif %}
+</div>
+{% endblock %}

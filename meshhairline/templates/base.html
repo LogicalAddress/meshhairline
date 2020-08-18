@@ -1,0 +1,100 @@
+{% load static wagtailuserbar wagtailcore_tags %}
+{% load wagtailmetadata_tags %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXX-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-XXXXXXXX-1');
+        </script>
+
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        {% if page %}
+        {% meta_tags %}
+        {% endif %}
+        {# Global stylesheets #}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}"/>
+        <script src="{% static 'wagtailadmin/js/vendor/jquery-3.2.1.min.js' %}"></script>
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/meshhairline.css' %}"/>
+        <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.0.19/default/snipcart.css" />
+        <script src="https://cdn.snipcart.com/themes/v3.0.19/default/snipcart.js"></script>
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        <div class="uk-offcanvas-content">
+        <div id="snipcart" data-api-key="{{ settings.common.WebsiteSettings.snipcart_api_key }}" hidden></div>
+        {% wagtailuserbar %}
+
+        {% if page and page.header %}
+            {% include_block page.header %}
+        {% else %}
+            {% include 'header.html' %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+        {% if page and page.footer %}
+            {% include_block page.footer %}
+        {% else %}
+            {% include 'footer.html' %}
+        {% endif %}
+
+        {# Global javascript #}
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+        <div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
+            <div class="uk-offcanvas-bar uk-text-center">
+        
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+        
+                <ul class="uk-nav uk-nav-default">
+                    <li class="uk-parent">
+                        <a class="uk-navbar-item uk-logo uk-width-auto" href="#"><img src="assets/img/tirzah.png" alt=""></a>
+                    </li>
+                    <li class="uk-nav-header">Header</li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+                    <p>Purchase $50+ Get Free Shipping</p>
+                    <li class="uk-active"><a href="#">Get 20% Discount Per Invite!</a></li>
+                </ul>
+        
+            </div>
+        </div>
+        <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('.custom-field-select').onchange = function(event) {
+                    if (event.target.dataset.field) {
+                        document.querySelector('.snipcart-add-item')
+                            .dataset['itemCustom' + event.target.dataset.field + 'Value'] = event.target.value;
+                    }
+                };
+            },false);
+        </script>
+    </body>
+</html>

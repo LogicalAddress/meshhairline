@@ -1,0 +1,93 @@
+@include webfont(Open Sans, opensans-light, 300, normal);
+@include webfont(Open Sans, opensans-regular, 400, normal);
+@include webfont(Open Sans, opensans-semibold, 600, normal);
+@include webfont(Open Sans, opensans-bold, 700, normal);
+@include webfont(Roboto Slab, robotoslab-regular, 400, normal);
+@include webfont(Roboto Slab, robotoslab-bold, 700, normal);
+
+.modal body {
+    -webkit-font-smoothing: antialiased; // Do not remove!
+    font-family: Open Sans, Arial, sans-serif;
+    font-size: 85%;
+    line-height: 1.5em;
+    color: $color-text-base;
+}
+
+.modal h1,
+.modal h2,
+.modal h3,
+.modal h4,
+.modal h5,
+.modal h6 {
+    font-weight: normal;
+}
+
+.modal h1 {
+    line-height: 1.3em;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    color: $color-grey-1;
+    font-weight: 600;
+
+    span {
+        text-transform: none;
+        font-weight: 300;
+    }
+}
+
+.modal h2 {
+    text-transform: uppercase;
+    font-size: 1.3em;
+    font-family: Open Sans;
+    font-weight: 600;
+    color: $color-grey-2;
+}
+
+.modal p {
+    margin-top: 0;
+}
+
+.modal a {
+    // @include transition(color 0.2s ease, background-color 0.2s ease);
+    color: $color-link;
+    text-decoration: none;
+
+    &:hover {
+        color: $color-link-hover;
+    }
+}
+
+.modal code {
+    box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.2);
+    background-color: $color-fieldset-hover;
+    padding: 2px 5px;
+}
+
+.modal kbd {
+    border-radius: 3px;
+    font-family: Open Sans, Arial, sans-serif;
+    border: 1px solid $color-grey-2;
+    border-color: rgba(0, 0, 0, 0.2);
+    padding: 0.3em 0.5em;
+}
+
+.modal dl,
+.modal dt,
+.modal dd {
+    padding: 0;
+    margin: 0;
+}
+
+.modal dl {
+    margin-top: 1em;
+}
+
+.modal dt {
+    color: $color-grey-2;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.modal dd {
+    margin-bottom: 1em;
+}

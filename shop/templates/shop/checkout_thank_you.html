@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n static wagtailcore_tags %}
+
+{% block body_class %}template-shop{% endblock %}
+
+{% block extra_css %}
+
+{% endblock extra_css %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<section>
+    <div class="uk-container">
+        {% include_block page.thankyou_body %}
+    </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n wagtailcore_tags static wagtailimages_tags shop_tags humanize paystack wagtailroutablepage_tags %}
+{% block body_class %}template-shopindexpage{% endblock %}
+
+{% block content %}
+{% cart %}
+<section id="cart">
+    {% for item in cart.items %}
+    <div class="grid-container padding-1 uk-padding-remove-horizontal ">
+        <div class="uk-child-width-1-2@m" uk-grid>
+        <div>
+                {% image item.product.image max-300x300 as temp_image %}
+                <img src="{{ temp_image.url }}" alt="">
+        </div>
+        <div>
+            <article class="uk-article">
+                <!-- <p class="uk-article-meta">Nebulisers <a class="uk-margin-left" href="#">Philips</a></p> -->
+                <h3 class="uk-article-title uk-margin-small uk-margin-remove-top uk-text-bold"><a class="uk-link-reset" href="">{{ item.product.title }}</a></h3>
+                <h3 class="uk-display-inline-block cost uk-margin-remove uk-text-bold">{{settings.shop.ShopSettings.default_currency_symbol}}{{ item.price|intcomma }} </h3>{% if item.product.old_price > 0 %}<span class="former uk-text-muted uk-margin-small-left">Previously {{settings.shop.ShopSettings.default_currency_symbol}}<del>{{ item.product.old_price|intcomma }}</del></span>{% endif %}
+                <p>{{ item.product.short_description }}</p>
+                <div class="row grid-x">
+                    <div class="small-5">
+                        <button class="uk-button uk-button-default minus uk-border-circle">-</button>
+                        <span class="uk-margin-left uk-margin-right">{{item.quantity}}</span>
+                        <button class="uk-button uk-button-default plus uk-border-circle">+</button>
+                    </div>
+                    <!-- 
+                    <div class="small-offset-2">
+                        <p class="hurry"><span class="uk-text-bold">!<span class="uk-margin-small-left">Hurry</span></span> only 2 in stock</p>
+                    </div>
+                    <div class="small-5">
+                        
+                    </div> 
+                    -->
+                </div>
+            </article>
+        </div>
+        </div>
+    </div>
+    <hr class="uk-width-1-1@m">
+    {% endfor %}
+    {% if cart.items %}
+    <div class="uk-align-right uk-margin-large-right" uk-grid>
+        <table>
+            <tr>
+                <td><h1>Total</h1></td>
+                <td><h1>{{settings.shop.ShopSettings.default_currency_symbol}}{{cart.total|intcomma}}</h1></td>
+            </tr>
+        </table>
+        <div>
+        <!-- <button class="uk-button button-def"> Checkout with Stripe</button> -->
+        {% routablepageurl page 'checkout' as verify %}
+        <form action="{{verify}}" method="POST" id="ahpaystack">
+            {% csrf_token %}
+            {% paystack_button redirect_url=verify button_class="uk-button button-def" amount=cart.total email=request.user.email %}
+            </form>
+        </div>
+    </div>
+    <div class="uk-clearfix"></div>
+    {% else %}
+    <h1 class="uk-container uk-padding-large">Nothing in your cart yet.</h1>
+    {% endif %}
+</section>
+
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% load i18n wagtailcore_tags static wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+<section class="uk-container">
+    <section class="uk-section uk-padding-small uk-child-width-1-2@m" uk-grid>
+        <div class="uk-width-1-2@m">
+            {% if value.embed %}
+            <div class="responsive-object" style="min-height: {% firstof value.video_min_height '300px' %};">
+                {% embed value.embed.url %}
+            </div>
+            {% elif value.photo %}
+                {% image value.photo width-500 %}
+            {% else %}
+            {% endif %}
+        </div>
+        <div>
+            {% if value.heading %}
+            <h3 class="uk-text-lead line-high" style="font-weight: 800;font-size: 1.5rem;">{{ value.heading }}</h3>
+            {% endif %}
+            <p>{{ value.text|richtext }}</p>
+            {% if value.page and value.page.url %}
+            <p>
+                <a style="text-decoration: none; color: white;" class="uk-button button-def" href="{{ value.page.url }}">Read more</a>
+            </p>
+            {% endif %}
+        </div>
+    </section>
+</section>
+
