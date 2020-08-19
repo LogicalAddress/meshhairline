@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = 'kxd=9&mpjnfw6+-s9bt618nxb%)33p#y4cmr@dw7*%yu5@%^-b'
 
 ALLOWED_HOSTS = ['*'] 
@@ -13,13 +13,13 @@ DATABASES = {
         'PASSWORD': os.environ.get('DATABASE_PASS', 'yahweh'),
         'HOST': os.environ.get('DATABASE_HOST', 'localhost'),
         'PORT': os.environ.get('DATABASE_PORT', '3306'),
-        'OPTIONS': {
-            'ssl': {
-                'ca': os.path.join(BASE_DIR, 'ca-certificate.crt'),
-                'cert': None,
-                'key': None,
-            },
-        }
+        # 'OPTIONS': {
+        #     'ssl': {
+        #         'ca': os.path.join(BASE_DIR, 'ca-certificate.crt'),
+        #         'cert': None,
+        #         'key': None,
+        #     },
+        # }
     }
 }
 
