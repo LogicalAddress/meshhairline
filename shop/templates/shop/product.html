@@ -48,7 +48,7 @@
             <article class="uk-article">
                 <!-- <p class="uk-article-meta">Nebulisers <a class="uk-margin-left" href="#">Philips</a></p> -->
                 <h3 class="uk-article-title uk-margin-small uk-margin-remove-top uk-text-bold"><a class="uk-link-reset" href="">{{ page.title }}</a></h3>
-                <h3 class="uk-display-inline-block cost uk-margin-remove uk-text-bold">{{settings.shop.ShopSettings.default_currency_symbol}}{{ page.price|intcomma }} </h3>{% if page.old_price > 0 %}<span class="former uk-text-muted uk-margin-small-left">Previously {{settings.shop.ShopSettings.default_currency_symbol}}<del>{{ page.old_price|intcomma }}</del></span>{% endif %}
+                <h3 class="uk-display-inline-block cost uk-margin-remove uk-text-bold">{{settings.shop.ShopSettings.default_currency_symbol}}{% page.current_price(page.price, request.session.currency, settings.shop.ShopSettings.exchange_rate) %} </h3>{% if page.old_price > 0 %}<span class="former uk-text-muted uk-margin-small-left">Previously {{settings.shop.ShopSettings.default_currency_symbol}}<del>{{ page.old_price|intcomma }}</del></span>{% endif %}
                 <p>{{ page.short_description }}</p>
                 <form method="post" action="/cart/add/">
                 {% csrf_token %}

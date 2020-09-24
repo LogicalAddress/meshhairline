@@ -37,6 +37,7 @@ from .blocks import ProductBlock
 from users.models import User
 from wagtailmetadata.models import MetadataPageMixin
 from wagtail.admin.edit_handlers import PageChooserPanel
+from common.socialmeta import CollectionMixin
 
 class ProductTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -48,6 +49,8 @@ class ProductTag(TaggedItemBase):
 @register_setting
 class ShopSettings(BaseSetting):
     default_currency_symbol = models.CharField(default="N", max_length=3, help_text="Default should be naira symbol")
+    exchange_rate = models.IntegerField(default=380, help_text="1USD in NGN")
+
 
 
 class ShopIndexPage(MetadataPageMixin, Page):
@@ -172,8 +175,15 @@ class Product(MetadataPageMixin, Page):
         context['specifications'] = fields
         return context
 
+    def current_price(self, currency, rate):
+        if currency == "NGN":
+            return self.price
+        else:
+            return self.price / rate
+        
 
-class Collection(Page):
+
+class Collection(CollectionMixin, Page):
     icon = models.ForeignKey(
         'wagtailimages.Image', null=True, blank=True,
         on_delete=models.SET_NULL, related_name='+'
@@ -183,6 +193,11 @@ class Collection(Page):
         InlinePanel('category_collections', label="Featured Categories"),
         InlinePanel('featured_products_collection', label="Featured Products"),
     ]
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        context['products'] = Product.objects.child_of(self).live()
+        return context
 
     class Meta:
         verbose_name_plural = 'collections'
