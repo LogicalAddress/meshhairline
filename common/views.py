@@ -6,4 +6,4 @@ def switch_currency(request):
         pass
     currency = request.GET['currency']
     request.session['currency'] = currency
-    return redirect(request.META.HTTP_REFERER)
+    return redirect('/')

@@ -24,7 +24,7 @@
         {% endif %}
     </li>
     <li>
-        <a href="#">Currency[{{ request.user.username|upper }}]</a>
+        <a href="#">Currency[{% firstof request.session.currency "NGN" %}]</a>
         <div class="uk-navbar-dropdown">
             <ul class="uk-nav uk-navbar-dropdown-nav">
                 <li><a href="/switch_currency?currency=NGN">NGN</a></li>
