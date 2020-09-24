@@ -90,7 +90,7 @@ class ShopIndexPage(MetadataPageMixin, Page):
     ]
     def get_context(self, request):
         context = super().get_context(request)
-        context['products'] = Product.objects.child_of(self).live()
+        context['products'] = Product.objects.live()
         return context
     class Meta:
         verbose_name_plural = 'Shop Home'
