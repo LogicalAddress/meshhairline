@@ -61,7 +61,7 @@
                         <input type="hidden" value="{{page.pk}}" name="product_id" />
                     </div>
                     <div class="small-offset-2">
-                        <p class="hurry"><span class="uk-text-bold">!<span class="uk-margin-small-left">Hurry</span></span> only 2 in stock</p>
+                        <!-- <p class="hurry"><span class="uk-text-bold">!<span class="uk-margin-small-left">Hurry</span></span> only 2 in stock</p> -->
                     </div>
                     <div class="small-5">
                         
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="uk-margin-remove uk-child-width-1-1@s" uk-grid>
-                    <button class="uk-button button-def"> Add to Cart</button>
+                    {% if request.session.currency == 'USD' %}
                     <div class="uk-margin-remove uk-child-width-1-1@s" uk-grid>
                         <button class="snipcart-add-item uk-button button-def" data-item-name="{{ page.title }}"
                         data-item-id="{{ page.sku }}"
@@ -101,6 +101,9 @@
                             data-item-custom{{forloop.counter}}-options="{{f.options}}"
                         {% endfor %}> Add to Cart</button>
                     </div>
+                    {% else %}
+                    <button class="uk-button button-def"> Add to Cart</button>
+                    {% endif %}
                 </div>
                 </form>
             </article>
