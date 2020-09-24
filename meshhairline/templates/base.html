@@ -64,25 +64,7 @@
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
-        <div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
-            <div class="uk-offcanvas-bar uk-text-center">
-        
-                <button class="uk-offcanvas-close" type="button" uk-close></button>
-        
-                <ul class="uk-nav uk-nav-default">
-                    <li class="uk-parent">
-                        <a class="uk-navbar-item uk-logo uk-width-auto" href="#"><img src="assets/img/tirzah.png" alt=""></a>
-                    </li>
-                    <li class="uk-nav-header">Header</li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
-                    <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
-                    <p>Purchase $50+ Get Free Shipping</p>
-                    <li class="uk-active"><a href="#">Get 20% Discount Per Invite!</a></li>
-                </ul>
-        
-            </div>
-        </div>
+        {% include 'menus/side_menu.html' %}
         <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
         </div>
 

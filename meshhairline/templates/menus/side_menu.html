@@ -1,0 +1,22 @@
+{% load static menu_tags wagtailimages_tags %}
+<div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
+    <div class="uk-offcanvas-bar uk-text-center">
+        <button class="uk-offcanvas-close" type="button" uk-close></button>
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-parent">
+                <a class="uk-navbar-item uk-logo uk-width-auto" href="/"><img src="{% static 'img/logo.png' %}" alt="" /></a>
+            </li>
+            <li class="uk-nav-header">Header</li>
+            {% if request.user.is_authenticated %}
+            <li><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> <a href="/dashboard">Welcome {{ request.user.username|upper }}</a></li>
+            <li><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> <a href="/dashboard">Dashboard</a></li>
+            <li><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> <a href="/user/profile">Profile</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> <a href="{% url 'account_logout' %}">Logout</a></li>
+            {% else %}
+            <li><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> <a href="{% url 'account_login' %}">Sign In/ Register</a></li>
+            {% endif %}
+            {% flat_menu 'header-secondary' show_menu_heading=False template="menus/header_secondary_side.html" %} 
+        </ul>
+    </div>
+</div>

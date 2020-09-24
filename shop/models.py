@@ -47,7 +47,7 @@ class ProductTag(TaggedItemBase):
 
 @register_setting
 class ShopSettings(BaseSetting):
-    default_currency_symbol = models.CharField(default="₦", max_length=3, help_text="Default should be naira symbol")
+    default_currency_symbol = models.CharField(default="N", max_length=3, help_text="Default should be naira symbol")
 
 
 class ShopIndexPage(MetadataPageMixin, Page):

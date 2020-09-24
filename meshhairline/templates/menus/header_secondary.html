@@ -23,4 +23,13 @@
         <a href="{% url 'account_login' %}">Sign In/ Register</a>
         {% endif %}
     </li>
+    <li>
+        <a href="#">Currency[{{ request.user.username|upper }}]</a>
+        <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+                <li><a href="/switch_currency?currency=NGN">NGN</a></li>
+                <li><a href="/switch_currency?currency=USD">USD</a></li>
+            </ul>
+        </div>
+    </li>
 </ul>
