@@ -1,4 +1,4 @@
-{% load i18n wagtailcore_tags static wagtailimages_tags humanize %}
+{% load i18n wagtailcore_tags static shop_tags wagtailimages_tags humanize %}
 
 
 {% if value.products %}
@@ -16,7 +16,9 @@
                 </div>
                 <div class="uk-card-body uk-text-center">
                     <p class="uk-h4 uk-text-right" style="margin-right: 10px;">{{ product.title }}</p>
-                    <p class="uk-margin-remove uk-text-right">{{settings.shop.ShopSettings.default_currency_symbol}}{{ product.amount|intcomma }}</p>
+                    {% currency_price product.amount request.session.currency as price %}
+                    {% currency_symbol request.session.currency as currency %}
+                    <p class="uk-margin-remove uk-text-right">{{currency}}{{ price|intcomma }}</p>
                     <form action="{{ product.link }}?action=cart_add">
                         <button class="button-def-cart uk-button">Add to Cart</button>
                     </form>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n wagtailcore_tags static wagtailimages_tags %}
+{% load i18n wagtailcore_tags static shop_tags humanize wagtailimages_tags %}
 
 {% block body_class %}template-shopindexpage{% endblock %}
 
@@ -29,7 +29,9 @@
                     </div>
                     <div class="uk-card-body uk-text-center">
                         <p class="uk-h4 uk-text-left">{{ product.title }}</p>
-                        <p class="uk-margin-remove uk-text-left">{{ product.price }}</p>
+                        {% currency_price product.price request.session.currency as price %}
+                        {% currency_symbol request.session.currency as currency %}
+                        <p class="uk-margin-remove uk-text-left">{{currency}}{{ price|intcomma }}</p>
                         <p>{{ product.short_description }}</p>
                         <button href="#" class="button-def-cart uk-button">Add To Cart</button>
                     </div>

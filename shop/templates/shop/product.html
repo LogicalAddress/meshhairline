@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n wagtailcore_tags static wagtailimages_tags humanize %}
+{% load i18n wagtailcore_tags static shop_tags wagtailimages_tags humanize %}
 
 {% block body_class %}template-shopindexpage{% endblock %}
 
@@ -48,7 +48,9 @@
             <article class="uk-article">
                 <!-- <p class="uk-article-meta">Nebulisers <a class="uk-margin-left" href="#">Philips</a></p> -->
                 <h3 class="uk-article-title uk-margin-small uk-margin-remove-top uk-text-bold"><a class="uk-link-reset" href="">{{ page.title }}</a></h3>
-                <h3 class="uk-display-inline-block cost uk-margin-remove uk-text-bold">{{settings.shop.ShopSettings.default_currency_symbol}}{{ page.price|intcomma }} </h3>{% if page.old_price > 0 %}<span class="former uk-text-muted uk-margin-small-left">Previously {{settings.shop.ShopSettings.default_currency_symbol}}<del>{{ page.old_price|intcomma }}</del></span>{% endif %}
+                {% currency_price page.price request.session.currency as price %}
+                {% currency_symbol request.session.currency as currency %}
+                <h3 class="uk-display-inline-block cost uk-margin-remove uk-text-bold">{{currency}}{{ price|intcomma }} </h3>{% if page.old_price > 0 %}<span class="former uk-text-muted uk-margin-small-left">Previously {{settings.shop.ShopSettings.default_currency_symbol}}<del>{{ page.old_price|intcomma }}</del></span>{% endif %}
                 <p>{{ page.short_description }}</p>
                 <form method="post" action="/cart/add/">
                 {% csrf_token %}
@@ -93,7 +95,7 @@
                         <button class="snipcart-add-item uk-button button-def" data-item-name="{{ page.title }}"
                         data-item-id="{{ page.sku }}"
                         data-item-url="{{ page.get_full_url }}"
-                        data-item-price="{{ page.price }}"
+                        data-item-price="{{ price }}"
                         data-item-description="{{ page.short_description}}"
                         data-item-image="{{ temp_image.url }}"
                         {% for f in custom_fields %}
