@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n wagtailcore_tags static wagtailimages_tags %}
+{% load i18n wagtailcore_tags static wagtailimages_tags shop_tags humanize %}
 
 {% block body_class %}template-shopindexpage{% endblock %}
 
@@ -10,7 +10,7 @@
 
 {% block extra_js %}
 <script src="https://cdn.snipcart.com/themes/v3.0.16/default/snipcart.js"></script>
-{% endblock extra_js shop_tags humanize %}
+{% endblock extra_js%}
 
 
 {% block content %}
