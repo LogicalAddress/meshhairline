@@ -13,7 +13,7 @@
 }
 
 .byline a:hover{
-    color: #ac5764;
+    color: #ce437c;
     text-decoration: none !important;
     transition: all 1s ease-in-out;
 }
@@ -25,13 +25,13 @@ a, .uk-link{
 }
 
 a:hover, .uk-link:hover{
-    color: #ac5764;
+    color: #ce437c;
     text-decoration: none !important;
     transition: all 1s ease-in-out;
   }
 
 .orbit-previous, .orbit-next {
-    color: #ac5764;
+    color: #ce437c;
 }
 
 

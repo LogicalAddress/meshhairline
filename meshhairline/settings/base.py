@@ -218,6 +218,8 @@ BASE_URL = 'https://meshhairline.com'
 COUNTRIES_FIRST = ['NG', ]
 COUNTRIES_FIRST_REPEAT = ['NG', ]
 
+CURRENCY=(('NGN', _('NGN')), ('USD', _('USD')))
+
 EVENT_TYPES = (('concert', _('Concert')), ('conference', _('Conference')))
 PRODUCT_TYPE = (('default', _('Default')), ('ticket', _('Ticket')))
 EVENT_LAYOUTS = (

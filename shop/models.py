@@ -328,6 +328,7 @@ class AbstractOrder(models.Model):
     total = models.DecimalField(decimal_places=2, max_digits=10)
     payment_gateway = models.CharField(_("Payment Gateway"), max_length=255, blank=True, null=True)
     ref = models.CharField(_("Payment Reference"), max_length=255, blank=True, null=True)
+    currency = models.CharField(max_length=10, default="NGN", choices=settings.CURRENCY)
     is_delivered = models.BooleanField(default=False)
     is_shipped = models.BooleanField(default=False)
     is_received = models.BooleanField(default=False)
@@ -399,6 +400,7 @@ class OrderItem(index.Indexed, models.Model):
     total = models.DecimalField(decimal_places=2, max_digits=10)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     payment_gateway = models.CharField(_("Payment Gateway"), max_length=255, blank=True, null=True)
+    currency = models.CharField(max_length=10, default="NGN", choices=settings.CURRENCY)
     ref = models.CharField(_("Payment Reference"), max_length=255, blank=True, null=True)
     is_delivered = models.BooleanField(default=False)
     is_shipped = models.BooleanField(default=False)
@@ -546,18 +548,24 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
     def checkout(self, request):
         if request.POST and request.POST['trxref']:
             # TODO: Validate Paystack
+            if hasattr(request.session, 'currency') and request.session.currency == 'USD':
+                payment_gateway="snipcart"
+            else:
+                payment_gateway="paystack"
             cart = Cart(request.session)
             order = Order(title=request.POST['trxref'], email=request.user.email, 
                 username=request.user.username, unique_items=cart.unique_count,
                 author=request.user,
-                quantity=cart.count, total=cart.total, payment_gateway="paystack",
-                ref=request.POST['trxref'])
+                quantity=cart.count, total=cart.total, payment_gateway=payment_gateway,
+                ref=request.POST['trxref'],
+                currency=(request.session.currency if hasattr(request.session, 'currency') else 'NGN'))
             order.save()
             for item in cart.items:
                 oi = OrderItem(order=order, product=item.product, seller=item.product.seller,
                 title=item.product.title, email=request.user.email, username=request.user.username,
                 quantity=item.quantity, total=item.quantity*item.price, buyer=request.user,
-                price=item.price, payment_gateway="paystack",ref=request.POST['trxref'])
+                currency=(request.session.currency if hasattr(request.session, 'currency') else 'NGN'),
+                price=item.price, payment_gateway=payment_gateway,ref=request.POST['trxref'])
                 oi.save()
             cart.clear()
             return HttpResponseRedirect(self.url + self.reverse_subpage('thanks'))
