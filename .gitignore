@@ -139,3 +139,4 @@ cython_debug/
 
 media/*
 env.yml
+static
