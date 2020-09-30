@@ -18657,15 +18657,15 @@ textarea {
   margin-top: 30px;
   transition: all .3s;
   top: 0;
-  box-shadow: 0px 5px 0px #5d4996;
+  box-shadow: 0px 5px 0px #d2487c;
   position: relative; }
 
 .button-def:hover {
-  box-shadow: 0px 3px 0px #5d4996;
+  box-shadow: 0px 3px 0px #d2487c;
   top: 2px; }
 
 .button-def:active {
-  box-shadow: 0px 0px 0px #5d4996;
+  box-shadow: 0px 0px 0px #d2487c;
   top: 7px; }
 
 .uk-slideshow-items img {
@@ -18735,15 +18735,15 @@ footer > .bottom, footer > .bottom p {
   margin-bottom: 10px;
   transition: all .3s;
   top: 0;
-  box-shadow: 0px 5px 0px #5d4996;
+  box-shadow: 0px 5px 0px #d2487c;
   position: relative; }
 
 .button-def-cart:hover {
-  box-shadow: 0px 3px 0px #5d4996;
+  box-shadow: 0px 3px 0px #d2487c;
   top: 2px; }
 
 .button-def-cart:active {
-  box-shadow: 0px 0px 0px #5d4996;
+  box-shadow: 0px 0px 0px #d2487c;
   top: 7px; }
 
 p.uk-h4.uk-width-expand\@m {
