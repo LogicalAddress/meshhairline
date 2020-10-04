@@ -18650,7 +18650,7 @@ textarea {
   margin: 0; }
 
 .button-def {
-  background: linear-gradient(to right, #a89c6c, #207882);
+  background: linear-gradient(to right, #ffcd61, #d95899);
   color: #ffffff;
   border-radius: 35px;
   line-height: 60px;
@@ -18728,7 +18728,7 @@ footer > .bottom, footer > .bottom p {
   padding-top: 40%; }
 
 .button-def-cart {
-  background: linear-gradient(to right, #0d8daa, #207882);
+  background: linear-gradient(to right, #d95899, #d95899);
   color: #ffffff !important;
   border-radius: 35px;
   margin-top: 5px;
