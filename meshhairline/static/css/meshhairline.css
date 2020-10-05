@@ -93,3 +93,11 @@ footer p, footer a{
   font-size: 16px;
   line-height: 16px;
 }
+
+.snipcart-modal__container{
+  z-index: 1025;
+}
+
+.snipcart-cart__footer-col footer{
+  position: unset;
+}
