@@ -24,7 +24,8 @@
             <a class="uk-link-reset" href="{{ product.get_url }}">
                 <div class="uk-card uk-box-shadow-hover-large">
                     <div class="uk-card-media-top">
-                        {% image product.image fill-1000x500 as tmp_image %}
+                        <!-- {% image product.image fill-1000x500 as tmp_image %} -->
+                        {% image product.image fill-500x500 as tmp_image %}
                         <img src="{{ tmp_image.url }}" alt="" />
                     </div>
                     <div class="uk-card-body uk-text-center">
