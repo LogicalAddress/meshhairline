@@ -12,7 +12,7 @@
         <a class="uk-link-reset" href="{% if product.page %}{{ product.page.url }}{% else %}{{product.external_link}}{% endif%}">
             <div class="uk-card uk-box-shadow-hover-large fadeaway">
                 <div class="uk-card-media-top">
-                    {% image product.picture width-1000 %}
+                    {% image product.picture fill-500x500 %}
                 </div> 
                 <div class="uk-card-body uk-text-center">
                     <p class="uk-h4 uk-text-right" style="margin-right: 10px;">{{ product.title }}</p>
