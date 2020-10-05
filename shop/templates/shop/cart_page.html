@@ -9,7 +9,8 @@
     <div class="grid-container padding-1 uk-padding-remove-horizontal ">
         <div class="uk-child-width-1-2@m" uk-grid>
         <div>
-                {% image item.product.image max-300x300 as temp_image %}
+                <!-- {% image item.product.image max-300x300 as temp_image %} -->
+                {% image item.product.image fill-500x500 as temp_image %}
                 <img src="{{ temp_image.url }}" alt="">
         </div>
         <div>
