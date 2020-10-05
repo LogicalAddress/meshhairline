@@ -269,8 +269,8 @@ AUTH_USER_MODEL = 'users.User'
 CORS_ORIGIN_WHITELIST = ('http://localhost:8080', 'https://meshhairline.com', 
     'http://meshhairline.com', 'https://www.meshhairline.com', 'http://www.meshhairline.com', )
 
-PAYSTACK_PUBLIC_KEY=os.environ.get('PAYSTACK_PUBLIC_KEY', 'pk_test_9adf1cce1ba3b1e00b2433c290f0d2326c8697bd')
-PAYSTACK_SECRET_KEY=os.environ.get('PAYSTACK_SECRET_KEY', 'sk_test_22fc9b1c656206d945eb8305662d94a4fecb1579')
+PAYSTACK_PUBLIC_KEY=os.environ.get('PAYSTACK_PUBLIC_KEY', 'pk_test_0c9d87f71b434c1293fbfd65bd1c660665ea3757')
+PAYSTACK_SECRET_KEY=os.environ.get('PAYSTACK_SECRET_KEY', 'sk_test_6b5cc8bf4e86b8b5f224e655ac4cbe261eed5fd4')
 
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL','no-reply@pushdeploy.io')
 WAGTAILADMIN_NOTIFICATION_USE_HTML = True
