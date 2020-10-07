@@ -7,7 +7,7 @@
         {% for slide in value.items %}
         <li class="{% if slide.is_active %}is-active{% endif %} orbit-slide">
             {% if slide.display_type == "image" %}
-                {% image slide.image fill-400x900 class="orbit-image" %}
+                {% image slide.image fill-600x200 class="orbit-image" %}
                 <figcaption class="orbit-caption">{{slide.overlay_text}}</figcaption>
             {% elif slide.display_type == "text" %}
             <h3 class="text-left" style="font-size: 50px;">{{slide.overlay_text}}</h3>
