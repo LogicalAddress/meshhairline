@@ -10,6 +10,7 @@ from rest_framework import routers
 from search import views as search_views
 from .api import api_router
 from common.views import switch_currency
+from .app import PaymentMethods
 
 urlpatterns = [
     url(r'^account/', include('allauth.urls')), # Creates urls like yourwebsite.com/login/
@@ -25,6 +26,7 @@ urlpatterns = [
     # Terms and Conditions
     url(r'^terms/', include('termsandconditions.urls')),
     url(r'^switch_currency/$', switch_currency, name='switch_currency'),
+    url(r'^payment-methods/$', PaymentMethods.as_view()),
 ]
 
 
