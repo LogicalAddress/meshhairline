@@ -54,6 +54,8 @@ def set_default_currency(request, user, **kwargs):
         cart.clear()
     if user.default_currency:
         request.session['currency'] = user.default_currency
+    else:
+        request.session['currency'] = 'NGN'
 
 class JSONResponse(HttpResponse):
 	"""An HttpResponse that renders its content into JSON."""
