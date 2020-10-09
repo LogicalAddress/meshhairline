@@ -49,7 +49,7 @@ from shop.cart.cart import Cart
 
 @receiver(user_logged_in)
 def set_default_currency(request, user, **kwargs):
-    if request.session['currency'] and request.session['currency'] != user.default_currency:
+    if hasattr(request.session,'currency') and request.session['currency'] != user.default_currency:
         cart = Cart(request.session)
         cart.clear()
     if user.default_currency:
