@@ -150,6 +150,54 @@
         $(this).siblings("input[name='quantity']").val(parseInt(currentQTY) - 1)
         $(this).siblings(".pquantity").text(parseInt(currentQTY) - 1)
     })
+
+    
+    /*
+    {% if request.user.id %}
+    */
+    window.update = async function() {
+        console.log("running snipcart updates");
+        try {
+            console.log({ name: '{{ request.user.username|title }}',email: '{{ request.user.email }}' });
+            await Snipcart.api.cart.update({
+                email: "{{ request.user.email }}",
+                billingAddress:{
+                    name: '{{ request.user.username|title }}',
+                    fullName: '{{ request.user.username|title }}',
+                    email: '{{ request.user.email }}',
+                    city: '{{ request.user.city }}',
+                    country: '{{ request.user.country }}',
+                },
+                shippingAddress: {
+                    name: '{{ request.user.username|title }}',
+                    fullName: '{{ request.user.username|title }}',
+                    email: '{{ request.user.email }}',
+                    city: '{{ request.user.city }}',
+                    country: '{{ request.user.country }}',
+                },
+            });
+        } catch (error) {
+            console.log("error here", error.message);
+        }
+    }
+    /*
+    {% endif %}
+    */
+
+    function asyncCall() {
+        console.log("on check..");
+        // Snipcart.events.on('summary.checkout_clicked', update);
+        Snipcart.events.on('theme.routechanged', async(routesChange) => {
+            if (routesChange.from === "/" && routesChange.to !== "/") {
+                console.log('cart opened');
+                await update();
+            }
+            if (routesChange.from !== "/" && routesChange.to === "/") {
+                console.log('cart closed');
+            }
+        });
+    }
+    document.addEventListener('snipcart.ready', asyncCall);
 </script>
 
 {% endblock content %}
