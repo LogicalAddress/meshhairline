@@ -110,10 +110,11 @@ class PaymentMethods(APIView):
         print("Incoming post")
         print(request.data)
         data = {
-            "headers": {
-                "content-type": "application/json"
-            },
-            "body": [
+            # "headers": {
+            #     "content-type": "application/json"
+            # },
+            # "body": 
+            [
                 {
                     "id": "2checkoutcom",
                     "name": "2Checkout.com",
@@ -126,5 +127,5 @@ class PaymentMethods(APIView):
                 #     "iconUrl": "https://snipcart.com/checkout_gateway_2/icon.png"
                 # }
             ]
-        }
+        # }
         return Response(data)
