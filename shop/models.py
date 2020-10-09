@@ -211,7 +211,6 @@ class Product(MetadataPageMixin, RoutablePageMixin, Page):
             "image": item.get_site().root_url + item.image.get_rendition('fill-50x50').url,
             "url": item.get_url() + self.reverse_subpage('item', args=(pk, )),
         }
-        print(data)   
         return JSONResponse(data, status=200)
 
     def get_currency_price(self, price, currency): 

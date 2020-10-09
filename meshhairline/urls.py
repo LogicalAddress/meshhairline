@@ -11,6 +11,7 @@ from search import views as search_views
 from .api import api_router
 from common.views import switch_currency
 from .app import PaymentMethods, SnipcartHook
+from shop.views import twoCheckoutCo, customPaymentSession, customConfirmPayment
 
 urlpatterns = [
     url(r'^account/', include('allauth.urls')), # Creates urls like yourwebsite.com/login/
@@ -28,6 +29,9 @@ urlpatterns = [
     url(r'^switch_currency/$', switch_currency, name='switch_currency'),
     url(r'^payment-methods/$', PaymentMethods.as_view()),
     url(r'^snipcart_hook/$', SnipcartHook.as_view()),
+    url(r'^2checkout/$', twoCheckoutCo),
+    url(r'^custom-payment-session/$', customPaymentSession),
+    url(r'^custom-confirm-payment/$', customConfirmPayment),
 ]
 
 
