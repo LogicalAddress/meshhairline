@@ -83,7 +83,7 @@ class Dashboard(RoutablePageMixin, MetadataPageMixin, Page):
         orders = get_shop_model('shop.Order').objects.filter(author=request.user).order_by('-id')[:10]
         context = self.get_context(request)
         context['orders'] = orders
-        return render(request, "users/orders.html", context)
+        return render(request, "dashboard/orders.html", context)
     
     @route(r'^orders/(?P<pk>[-\w]+)/$')
     def order(self, request, pk):
@@ -96,5 +96,5 @@ class Dashboard(RoutablePageMixin, MetadataPageMixin, Page):
         context = self.get_context(request)
         context['items'] = items
         context['order'] = order
-        return render(request, "users/order_items.html", context)
+        return render(request, "dashboard/order_items.html", context)
 
