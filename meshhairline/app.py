@@ -61,11 +61,11 @@ class SnipcartHook(APIView):
                     currency=currency,
                     price=item['unitPrice'], payment_gateway=payment_gateway,ref=item['uniqueId'])
                     oi.save()
+                user.default_currency = currency
+                user.save()
             data = {
                 "body": "ok"
             }
-            user.default_currency = currency
-            user.save()
             return Response(data)
         except Exception as e:
                 print(str(e) + ' Warning: snipcart webhook.')
