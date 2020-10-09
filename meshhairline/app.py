@@ -92,7 +92,7 @@ class PaymentMethods(APIView):
                 {
                     "id": "2checkoutcom",
                     "name": "2Checkout.com",
-                    "checkoutUrl": "https://meshhairline.com/2checkout",
+                    "checkoutUrl": "https://sleeky-pay.netlify.app/index.html",
                 },
                 # {
                 #     "id": "snipcart_custom_gatway_2",

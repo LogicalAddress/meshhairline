@@ -189,8 +189,8 @@
         // Snipcart.events.on('summary.checkout_clicked', async()=>{
         //     await update();
         // });
-        
-        Snipcart.subscribe('cart.opened', async(routesChange) => {
+        Snipcart.events.on('cart.opened', async(routesChange) => {
+        // Snipcart.subscribe('cart.opened', async(routesChange) => {
             // if (routesChange.from === "/" && routesChange.to !== "/") {
                 // console.log('cart opened');
                 // await update();
