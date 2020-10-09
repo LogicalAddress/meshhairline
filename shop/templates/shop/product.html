@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n wagtailcore_tags static shop_tags wagtailimages_tags humanize %}
-
+{% load wagtailroutablepage_tags %}
 {% block body_class %}template-shopindexpage{% endblock %}
 
 {% block content %}
@@ -93,8 +93,8 @@
                     {% if request.session.currency == 'USD' %}
                     <div class="uk-margin-remove uk-child-width-1-1@s" uk-grid>
                         <button class="snipcart-add-item uk-button button-def" data-item-name="{{ page.title }}"
-                        data-item-id="{{ page.sku }}"
-                        data-item-url="{{ page.get_full_url }}"
+                        data-item-id="{{ page.pk }}"
+                        data-item-url="{% routablepageurl page 'item' pk=page.pk %}"
                         data-item-price="{{ price }}"
                         data-item-description="{{ page.short_description}}"
                         data-item-image="{{ temp_image.url }}"

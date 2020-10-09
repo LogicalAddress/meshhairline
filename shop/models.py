@@ -38,6 +38,17 @@ from users.models import User
 from wagtailmetadata.models import MetadataPageMixin
 from wagtail.admin.edit_handlers import PageChooserPanel
 from common.socialmeta import CollectionMixin
+from rest_framework.response import Response
+from django.http import HttpResponse
+from rest_framework.renderers import JSONRenderer
+
+class JSONResponse(HttpResponse):
+	"""An HttpResponse that renders its content into JSON."""
+	def __init__(self, data, **kwargs):
+		content = JSONRenderer().render(data)
+		kwargs['content_type'] = 'application/json'
+		super(JSONResponse, self).__init__(content, **kwargs)
+
 
 class ProductTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -97,7 +108,7 @@ class ShopIndexPage(MetadataPageMixin, Page):
         verbose_name = 'Shop Home'
 
 
-class Product(MetadataPageMixin, Page):
+class Product(MetadataPageMixin, RoutablePageMixin, Page):
     date = models.DateField("Post date")
     sku = models.CharField(max_length=255)
     short_description = models.TextField(blank=True, null=True)
@@ -174,6 +185,26 @@ class Product(MetadataPageMixin, Page):
             fields.append(f)
         context['specifications'] = fields
         return context
+
+    @route(r'^item/(?P<pk>[-\w]+)/$')
+    def item(self, request, pk):
+        item = Product.objects.get(pk=pk)
+        data = {
+            "id": item.pk,
+            "price": self.get_currency_price(item.price, 'USD'),
+            # "url": self.reverse_subpage('item', args=(pk, )),
+            "url": item.get_url() + self.reverse_subpage('item', args=(pk, )),
+        }
+        print(data)   
+        return JSONResponse(data, status=200)
+
+    def get_currency_price(self, price, currency): 
+        if currency and currency == "USD":
+            rate = 360
+            price = float(price) / rate
+            return "%.2f" % round(price, 2)
+        else:
+            return float(price)
 
     def current_price(self, currency, rate):
         if currency == "NGN":
