@@ -21,13 +21,34 @@ class PaymentMethods(APIView):
 
     def get(self, request, format=None):
         """
-        Return currently logged in user's favourites.
+        Docs
         """
-        return Response([])    
+        print("Incoming get")
+        print(request.data)
+        data = {
+            "headers": {
+                "content-type": "application/json"
+            },
+            "body": [
+                {
+                    "id": "2checkoutcom",
+                    "name": "2Checkout.com",
+                    "checkoutUrl": "https://meshhairline.com/2checkout",
+                },
+                # {
+                #     "id": "snipcart_custom_gatway_2",
+                #     "name": "Custom gateway 2",
+                #     "checkoutUrl": "https://snipcart.com/checkout_gateway_2",
+                #     "iconUrl": "https://snipcart.com/checkout_gateway_2/icon.png"
+                # }
+            ]
+        }
+        return Response(data)
     def post(self, request, format=None):
         """
         Docs
         """
+        print("Incoming post")
         print(request.data)
         data = {
             "headers": {
