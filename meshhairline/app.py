@@ -12,6 +12,32 @@ from django.http import Http404
 from rest_framework import status
 from datetime import datetime
 
+class SnipcartHook(APIView):
+    """
+    * Requires token authentication.
+    """
+    # authentication_classes = [authentication.TokenAuthentication, authentication.SessionAuthentication]
+
+    def get(self, request, format=None):
+        """
+        Docs
+        """
+        print("SnipcartHook:GET: Incoming get")
+        print(request.data)
+        data = {
+            "body": "ok"
+        }
+        return Response(data)
+    def post(self, request, format=None):
+        """
+        Docs
+        """
+        print("SnipcartHook:POST: Incoming post")
+        print(request.data)
+        data = {
+            "body": "ok"
+        }
+        return Response(data)
 
 class PaymentMethods(APIView):
     """
