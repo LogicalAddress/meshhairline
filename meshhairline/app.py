@@ -50,7 +50,7 @@ class SnipcartHook(APIView):
                     username=user.username, unique_items=unique_items,
                     author=request.user,
                     quantity=quantity, total=total, payment_gateway=payment_gateway,
-                    ref=request.POST['trxref'],
+                    ref=request.data['content']['user']['paymentTransactionId'],
                     currency=currency)
                 order.save()
                 for item in request.data['content']['items']:
@@ -59,7 +59,7 @@ class SnipcartHook(APIView):
                     title=product.title, email=user.email, username=user.username,
                     quantity=item['quantity'], total=item['totalPrice'], buyer=user,
                     currency=currency,
-                    price=item['unitPrice'], payment_gateway=payment_gateway,ref=item['token'])
+                    price=item['unitPrice'], payment_gateway=payment_gateway,ref=item['uniqueId'])
                     oi.save()
             data = {
                 "body": "ok"
@@ -67,7 +67,7 @@ class SnipcartHook(APIView):
             return Response(data)
         except Exception as e:
                 print(str(e) + ' Warning: snipcart webhook.')
-                return Response({'status': 'error'})
+                return Response({'status': str(e)})
 
 class PaymentMethods(APIView):
     """
