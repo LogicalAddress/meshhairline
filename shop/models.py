@@ -613,7 +613,7 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
                 price=item.price, payment_gateway=payment_gateway,ref=request.POST['trxref'])
                 oi.save()
             user = User.objects.get(pk=request.user.pk)
-            user.default_currency = currency
+            user.default_currency = request.session.currency
             user.save()
             cart.clear()
             return HttpResponseRedirect(self.url + self.reverse_subpage('thanks'))
