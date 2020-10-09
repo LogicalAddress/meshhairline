@@ -42,6 +42,9 @@ class SnipcartHook(APIView):
                 user = User.objects.get(email=request.data['content']['user']['email'])
                 unique_items = len(request.data['content']['items'])
                 # quantity = [sum(x.quantity) for x in request.data['content']['items']]
+                print("user object")
+                print(request.data['content']['user'])
+                print(request.data['content']['user']['itemsCount'])
                 quantity = request.data['content']['user']['itemsCount']
                 total = request.data['content']['user']['itemsTotal']
                 currency = request.data['content']['user']['currency']
