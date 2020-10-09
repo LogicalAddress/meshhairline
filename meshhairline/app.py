@@ -11,6 +11,8 @@ from django.conf import settings
 from django.http import Http404
 from rest_framework import status
 from datetime import datetime
+from users.models import User
+from shop.models import Order, OrderItem, Product
 
 class SnipcartHook(APIView):
     """
@@ -33,11 +35,39 @@ class SnipcartHook(APIView):
         Docs
         """
         print("SnipcartHook:POST: Incoming post")
-        print(request.data)
-        data = {
-            "body": "ok"
-        }
-        return Response(data)
+        print(request.data['eventName'])
+        try:
+            if request.data['eventName'] == "order.completed":
+                payment_gateway="snipcart"
+                user = User.objects.get(email=request.data['content']['user']['email'])
+                unique_items = len(request.data['content']['items'])
+                # quantity = [sum(x.quantity) for x in request.data['content']['items']]
+                quantity = request.data['content']['user']['itemsCount']
+                total = request.data['content']['user']['itemsTotal']
+                currency = request.data['content']['user']['currency']
+                order = Order(title=request.data['content']['user']['paymentTransactionId'], 
+                    email=user.email, 
+                    username=user.username, unique_items=unique_items,
+                    author=request.user,
+                    quantity=quantity, total=total, payment_gateway=payment_gateway,
+                    ref=request.POST['trxref'],
+                    currency=currency)
+                order.save()
+                for item in request.data['content']['items']:
+                    product = Product.objects.get(pk=item['id'])
+                    oi = OrderItem(order=order, product=product, seller=product.seller,
+                    title=product.title, email=user.email, username=user.username,
+                    quantity=item['quantity'], total=item['totalPrice'], buyer=user,
+                    currency=currency,
+                    price=item['unitPrice'], payment_gateway=payment_gateway,ref=item['token'])
+                    oi.save()
+            data = {
+                "body": "ok"
+            } 
+            return Response(data)
+        except Exception as e:
+                print(str(e) + ' Warning: snipcart webhook.')
+                return Response({'status': 'error'})
 
 class PaymentMethods(APIView):
     """
