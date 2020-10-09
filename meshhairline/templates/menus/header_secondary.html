@@ -24,6 +24,9 @@
         {% endif %}
     </li>
     <li>
+        {% if request.user.default_currency %}
+        <a href="#">Currency[{% firstof request.user.default_currency request.session.currency "NGN" %}]</a>
+        {% else %}
         <a href="#">Currency[{% firstof request.session.currency "NGN" %}]</a>
         <div class="uk-navbar-dropdown">
             <ul class="uk-nav uk-navbar-dropdown-nav">
@@ -31,5 +34,6 @@
                 <li><a href="/switch_currency?currency=USD">USD</a></li>
             </ul>
         </div>
+        {% endif %}
     </li>
 </ul>

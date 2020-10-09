@@ -9,3 +9,4 @@ class User(AbstractUser):
     city = models.CharField(max_length=255, blank=True, null=True)
     phone = models.CharField(max_length=255, blank=True, null=True)
     shipping_address = models.TextField(blank=True, null=True)
+    default_currency = models.CharField(max_length=10, choices=settings.CURRENCY, blank=True, null=True)

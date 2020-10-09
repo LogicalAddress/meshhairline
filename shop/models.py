@@ -42,6 +42,19 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 
+from allauth.account.signals import user_logged_in
+from django.dispatch import receiver
+from shop.cart.cart import Cart
+
+
+@receiver(user_logged_in)
+def set_default_currency(request, user, **kwargs):
+    if request.session['currency'] and request.session['currency'] != user.default_currency:
+        cart = Cart(request.session)
+        cart.clear()
+    if user.default_currency:
+        request.session['currency'] = user.default_currency
+
 class JSONResponse(HttpResponse):
 	"""An HttpResponse that renders its content into JSON."""
 	def __init__(self, data, **kwargs):
