@@ -91,13 +91,14 @@
                 </div>
                 <div class="uk-margin-remove uk-child-width-1-1@s" uk-grid>
                     {% if request.session.currency == 'USD' %}
+                    {% image page.image fill-50x50 as thumbnail %}
                     <div class="uk-margin-remove uk-child-width-1-1@s" uk-grid>
                         <button class="snipcart-add-item uk-button button-def" data-item-name="{{ page.title }}"
                         data-item-id="{{ page.pk }}"
                         data-item-url="{% routablepageurl page 'item' pk=page.pk %}"
                         data-item-price="{{ price }}"
                         data-item-description="{{ page.short_description}}"
-                        data-item-image="{{ temp_image.url }}"
+                        data-item-image="{{ page.get_site.root_url }}{{ thumbnail.url }}"
                         {% for f in custom_fields %}
                             data-item-custom{{forloop.counter}}-name="{{f.name}}"
                             data-item-custom{{forloop.counter}}-options="{{f.options}}"
