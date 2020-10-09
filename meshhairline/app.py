@@ -45,12 +45,13 @@ class SnipcartHook(APIView):
                 quantity = request.data['content']['itemsCount']
                 total = request.data['content']['itemsTotal']
                 currency = request.data['content']['currency'].upper()
-                order = Order(title=request.data['content']['paymentTransactionId'], 
+                tx = request.data['content']['paymentTransactionId'] or request.data['content']['token']
+                order = Order(title=tx, 
                     email=user.email, 
                     username=user.username, unique_items=unique_items,
                     author=user,
                     quantity=quantity, total=total, payment_gateway=payment_gateway,
-                    ref=request.data['content']['paymentTransactionId'],
+                    ref=tx,
                     currency=currency)
                 order.save()
                 for item in request.data['content']['items']:
