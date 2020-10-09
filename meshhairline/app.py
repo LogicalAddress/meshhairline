@@ -51,7 +51,7 @@ class SnipcartHook(APIView):
                 order = Order(title=request.data['content']['paymentTransactionId'], 
                     email=user.email, 
                     username=user.username, unique_items=unique_items,
-                    author=request.user,
+                    author=user,
                     quantity=quantity, total=total, payment_gateway=payment_gateway,
                     ref=request.data['content']['paymentTransactionId'],
                     currency=currency)
