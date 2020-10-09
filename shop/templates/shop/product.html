@@ -186,18 +186,90 @@
 
     function asyncCall() {
         console.log("on check..");
-        // Snipcart.events.on('summary.checkout_clicked', update);
-        Snipcart.events.on('theme.routechanged', async(routesChange) => {
-            if (routesChange.from === "/" && routesChange.to !== "/") {
-                console.log('cart opened');
-                await update();
-            }
-            if (routesChange.from !== "/" && routesChange.to === "/") {
-                console.log('cart closed');
-            }
+        // Snipcart.events.on('summary.checkout_clicked', async()=>{
+        //     await update();
+        // });
+        
+        Snipcart.subscribe('cart.opened', async(routesChange) => {
+            // if (routesChange.from === "/" && routesChange.to !== "/") {
+                // console.log('cart opened');
+                // await update();
+                // console.log({ name: '{{ request.user.username|title }}',email: '{{ request.user.email }}' });
+                Snipcart.api.cart.billingAddress({
+                    "name": "{{ request.user.username|title }}",
+                    "email": "{{ request.user.email }}",
+                    "address1": "{% firstof request.user.shipping_address '' %}",
+                    "city": "{{ request.user.city|title }}",
+                    "country": "{{ request.user.country }}",
+                }).then (function (cart) {
+                    console.log ({cart}); // It will contain the cart details with updated values.
+                }).catch((error)=>{
+                    console.log({error})
+                });
+
+                Snipcart.api.cart.shippingAddress({
+                    "name": "{{ request.user.username|title }}",
+                    "address1": "{{ request.user.shipping_address }}",
+                    "city": "{{ request.user.city|title }}",
+                    "country": "{{ request.user.country }}",
+                }).then (function (cart) {
+                    console.log({cart}); // It will contain the cart details with updated values.
+                }).catch((err)=>{
+                    console.log({err});
+                });
+                // Snipcart.api.configure('email', {
+                    // email: "{{ request.user.email }}",
+                
+                    // billingAddress:{
+                    //     name: '{{ request.user.username|title }}',
+                    //     fullName: '{{ request.user.username|title }}',
+                    //     email: '{{ request.user.email }}',
+                    //     city: '{{ request.user.city }}',
+                    //     country: '{{ request.user.country }}',
+                    // },
+                    // shipToBillingAddress: true,
+                    // shippingAddress: {
+                    //     name: '{{ request.user.username|title }}',
+                    //     fullName: '{{ request.user.username|title }}',
+                    //     email: '{{ request.user.email }}',
+                    //     city: '{{ request.user.city }}',
+                    //     country: '{{ request.user.country }}',
+                    // },
+                // })
+                // .then((res)=>{
+                //     console.log({res});
+                // }).catch((err)=>{
+                //     console.log(err)
+                // });
+            // }
+            // if (routesChange.from !== "/" && routesChange.to === "/") {
+            //     console.log('cart closed');
+            // }
         });
     }
     document.addEventListener('snipcart.ready', asyncCall);
+    // Snipcart.subscribe('ready', function() {
+    // document.addEventListener('snipcart.ready', function() {
+    //         Snipcart.api.cart.update({
+    //             email: "{{ request.user.email }}",
+    //             billingAddress:{
+    //                 name: '{{ request.user.username|title }}',
+    //                 fullName: '{{ request.user.username|title }}',
+    //                 email: '{{ request.user.email }}',
+    //                 city: '{{ request.user.city }}',
+    //                 country: '{{ request.user.country }}',
+    //             },
+    //             shippingAddress: {
+    //                 name: '{{ request.user.username|title }}',
+    //                 fullName: '{{ request.user.username|title }}',
+    //                 email: '{{ request.user.email }}',
+    //                 city: '{{ request.user.city }}',
+    //                 country: '{{ request.user.country }}',
+    //             },
+    //         }).then((res)=>{
+    //             console.log({res});
+    //         });
+    // });
 </script>
 
 {% endblock content %}
