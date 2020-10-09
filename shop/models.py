@@ -193,6 +193,7 @@ class Product(MetadataPageMixin, RoutablePageMixin, Page):
             "id": item.pk,
             "price": self.get_currency_price(item.price, 'USD'),
             # "url": self.reverse_subpage('item', args=(pk, )),
+            "image": item.get_site().root_url + item.image.get_rendition('fill-50x50').url,
             "url": item.get_url() + self.reverse_subpage('item', args=(pk, )),
         }
         print(data)   
