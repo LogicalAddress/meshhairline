@@ -596,8 +596,13 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
         if request.POST and request.POST['trxref']:
             # TODO: Validate Paystack
             if hasattr(request.session, 'currency') and request.session.currency == 'USD':
+                currency = request.session.currency
                 payment_gateway="snipcart"
-            else:
+            elif hasattr(request.session, 'currency') and request.session.currency == 'NGN':
+                currency = request.session.currency
+                payment_gateway="paystack"
+            else
+                currency = 'NGN'
                 payment_gateway="paystack"
             cart = Cart(request.session)
             order = Order(title=request.POST['trxref'], email=request.user.email, 
@@ -605,17 +610,17 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
                 author=request.user,
                 quantity=cart.count, total=cart.total, payment_gateway=payment_gateway,
                 ref=request.POST['trxref'],
-                currency=(request.session.currency if hasattr(request.session, 'currency') else 'NGN'))
+                currency=currency)
             order.save()
             for item in cart.items:
                 oi = OrderItem(order=order, product=item.product, seller=item.product.seller,
                 title=item.product.title, email=request.user.email, username=request.user.username,
                 quantity=item.quantity, total=item.quantity*item.price, buyer=request.user,
-                currency=(request.session.currency if hasattr(request.session, 'currency') else 'NGN'),
+                currency=currency,
                 price=item.price, payment_gateway=payment_gateway,ref=request.POST['trxref'])
                 oi.save()
             user = User.objects.get(pk=request.user.pk)
-            user.default_currency = request.session.currency
+            user.default_currency = currency
             user.save()
             cart.clear()
             return HttpResponseRedirect(self.url + self.reverse_subpage('thanks'))
