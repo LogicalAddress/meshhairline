@@ -39,7 +39,7 @@
                         <th>Ref</th>
                         <th>Items</th>
                         <th>Products</th>
-                        <th>Amount ({{settings.shop.ShopSettings.default_currency_symbol}})</th>
+                        <th>Amount ({% firstof request.user.default_currency settings.shop.ShopSettings.default_currency_symbol %})</th>
                         <th>Payment Ref</th>
                         <th>Payment Type</th>
                         <th>Created At</th>
