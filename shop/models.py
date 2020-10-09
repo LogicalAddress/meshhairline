@@ -601,7 +601,7 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
             elif hasattr(request.session, 'currency') and request.session.currency == 'NGN':
                 currency = request.session.currency
                 payment_gateway="paystack"
-            else
+            else:
                 currency = 'NGN'
                 payment_gateway="paystack"
             cart = Cart(request.session)
