@@ -109,12 +109,7 @@ class PaymentMethods(APIView):
         """
         print("Incoming post")
         print(request.data)
-        data = {
-            # "headers": {
-            #     "content-type": "application/json"
-            # },
-            # "body": 
-            [
+        data = [
                 {
                     "id": "2checkoutcom",
                     "name": "2Checkout.com",
