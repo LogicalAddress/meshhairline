@@ -498,7 +498,7 @@ class OrderItem(index.Indexed, models.Model):
         verbose_name_plural = 'Order Items'
         verbose_name = 'Order Item'
 
-class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
+class CartPage(RoutablePageMixin, MetadataPageMixin, Page): 
     header = StreamField([
         ('header', WebsiteHeader()),
         ('empty', EmptyBlock()),
@@ -541,8 +541,6 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
     ]
     @route(r'^$')
     def base(self, request):
-        cart = Cart(request.session)
-        print(cart.products)
         return TemplateResponse(
           request,
           self.get_template(request),
@@ -631,5 +629,5 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
         return TemplateResponse(
           request,
            'shop/checkout_thank_you.html',
-           { "page" : self }
+           { "page" : self, "self": self }
         )
