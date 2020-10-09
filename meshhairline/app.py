@@ -11,7 +11,7 @@ from django.conf import settings
 from django.http import Http404
 from rest_framework import status
 from datetime import datetime
-from django.contrib.auth.models import User
+from users.models import User
 from shop.models import Order, OrderItem, Product
 
 class SnipcartHook(APIView):
