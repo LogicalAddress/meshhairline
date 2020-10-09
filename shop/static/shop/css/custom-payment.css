@@ -1,13 +1,13 @@
 @font-face {
     font-display:fallback;font-family: Proxima Nova;
-    src: url(../fonts/proxima_nova_light.eot?#iefix) format("embedded-opentype"),url(./proxima_nova_light.woff2) format("woff2"),url(./proxima_nova_light.woff) format("woff"),url(./proxima_nova_light.ttf) format("ttf"),url(./proxima_nova_light.svg#ProximaNova-Light) format("svg");
+    src: url(../fonts/proxima_nova_light.eot?#iefix) format("embedded-opentype"),url(../fonts/proxima_nova_light.woff2) format("woff2"),url(../fonts/proxima_nova_light.woff) format("woff"),url(../fonts/proxima_nova_light.ttf) format("ttf"),url(../fonts/proxima_nova_light.svg#ProximaNova-Light) format("svg");
     font-style: normal;
     font-weight: 300
   }
   
   @font-face {
     font-display:fallback;font-family: Proxima Nova;
-    src: url(../fonts/proxima_nova_semibold.eot?#iefix) format("embedded-opentype"),url(./proxima_nova_semibold.woff2) format("woff2"),url(./proxima_nova_semibold.woff) format("woff"),url(./proxima_nova_semibold.ttf) format("ttf"),url(./proxima_nova_semibold.svg#ProximaNova-Semibold) format("svg");
+    src: url(../fonts/proxima_nova_semibold.eot?#iefix) format("embedded-opentype"),url(../fonts/proxima_nova_semibold.woff2) format("woff2"),url(../fonts/proxima_nova_semibold.woff) format("woff"),url(../fonts/proxima_nova_semibold.ttf) format("ttf"),url(../fonts/proxima_nova_semibold.svg#ProximaNova-Semibold) format("svg");
     font-style: normal;
     font-weight: 600
   }
