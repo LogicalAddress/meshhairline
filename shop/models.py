@@ -612,6 +612,9 @@ class CartPage(RoutablePageMixin, MetadataPageMixin, Page):
                 currency=(request.session.currency if hasattr(request.session, 'currency') else 'NGN'),
                 price=item.price, payment_gateway=payment_gateway,ref=request.POST['trxref'])
                 oi.save()
+            user = User.objects.get(pk=request.user.pk)
+            user.default_currency = currency
+            user.save()
             cart.clear()
             return HttpResponseRedirect(self.url + self.reverse_subpage('thanks'))
         return HttpResponseRedirect(self.url + self.reverse_subpage('create'))
