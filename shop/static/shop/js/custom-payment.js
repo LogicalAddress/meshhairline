@@ -1,15 +1,25 @@
-if (window.PaymentRequest) {
+// if (window.PaymentRequest) {
 
     let paymentRequest
     let paymentDetails
     let paymentSession
     let currencyFormatter
+    let form
+
+    var myCallback = function(data) {
+      console.log(JSON.stringify(data));
+      // Example callback data
+      // {"event_type":"checkout_loaded"}
+      // {"event_type":"checkout_closed"}
+    };
   
     document.addEventListener("DOMContentLoaded", async () => {
       await fetchPaymentSession()
       createPaymentRequest()
       renderItems()
       bindBuyButton()
+      inline_2Checkout.subscribe('checkout_loaded', myCallback);
+      inline_2Checkout.subscribe('checkout_closed', myCallback);
     })
   
     // Get the payment session from Snipcart
@@ -32,38 +42,116 @@ if (window.PaymentRequest) {
     const createPaymentRequest = () => {
       const currency = paymentSession.invoice.currency
   
-      const googlePaymentDataRequest = {
-        environment: 'TEST',
-        apiVersion: 2,
-        apiVersionMinor: 0,
-        merchantInfo: {
-          // A merchant ID is available after approval by Google.
-          // 'merchantId':'12345678901234567890',
-          merchantName: 'Example Merchant'
-        },
-        allowedPaymentMethods: [{
-          type: 'CARD',
-          parameters: {
-            allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-            allowedCardNetworks: ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"]
-          },
-          tokenizationSpecification: {
-            type: 'PAYMENT_GATEWAY',
-            // Check with your payment gateway on the parameters to pass.
-            // @see {@link https://developers.google.com/pay/api/web/reference/request-objects#gateway}
-            parameters: {
-              'gateway': 'example',
-              'gatewayMerchantId': 'exampleGatewayMerchantId'
-            }
-          }
-        }]
-      }
-      const supportedMethods = [
-        { supportedMethods: 'basic-card' },
-        { supportedMethods: 'https://google.com/pay', data: googlePaymentDataRequest },
-      ]
+      // const googlePaymentDataRequest = {
+      //   environment: 'TEST',
+      //   apiVersion: 2,
+      //   apiVersionMinor: 0,
+      //   merchantInfo: {
+      //     // A merchant ID is available after approval by Google.
+      //     // 'merchantId':'12345678901234567890',
+      //     merchantName: 'Example Merchant'
+      //   },
+      //   allowedPaymentMethods: [{
+      //     type: 'CARD',
+      //     parameters: {
+      //       allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+      //       allowedCardNetworks: ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"]
+      //     },
+      //     tokenizationSpecification: {
+      //       type: 'PAYMENT_GATEWAY',
+      //       // Check with your payment gateway on the parameters to pass.
+      //       // @see {@link https://developers.google.com/pay/api/web/reference/request-objects#gateway}
+      //       parameters: {
+      //         'gateway': 'example',
+      //         'gatewayMerchantId': 'exampleGatewayMerchantId'
+      //       }
+      //     }
+      //   }]
+      // }
+      // const supportedMethods = [
+        // { supportedMethods: 'basic-card' },
+        // { supportedMethods: 'https://google.com/pay', data: googlePaymentDataRequest },
+      // ]
   
-      items = paymentSession.invoice.items
+      items = paymentSession.invoice.items;
+      form = document.getElementById('form');
+      var sessionId = document.getElementById('sessionId');
+      sessionId.value = paymentSession.id;
+      var email = document.getElementById('email');
+      email.value = paymentSession.invoice.email;
+      var sid = document.getElementById('sid');
+      sid.value = '250532301686'; //Meshhairline Merchant Code.
+      var mode = document.getElementById('mode');
+      mode.value = '2CO';
+      // Billin address
+      var billingAddress = paymentSession.invoice.billingAddress;
+      var card_holder_name = document.getElementById('card_holder_name');
+      card_holder_name.value = (billingAddress ? billingAddress.name || '' : '');
+      var street_address = document.getElementById('street_address');
+      street_address.value = (billingAddress ? billingAddress.streetAndNumber || '' : '');
+      var city = document.getElementById('city');
+      city.value = billingAddress ? billingAddress.city || '' : '';
+      var state = document.getElementById('state');
+      state.value = (billingAddress ? billingAddress.region || '' : '');
+      var postalCode = document.getElementById('zip');
+      postalCode.value = (billingAddress ? billingAddress.postalCode || '' : '');
+      var country = document.getElementById('country');
+      country.value = (billingAddress ? billingAddress.country || '' : '');
+
+      // Shipping Address
+      billingAddress = paymentSession.invoice.shippingAddress || paymentSession.invoice.billingAddress;
+      ship_name = document.getElementById('ship_name');
+      ship_name.value = (billingAddress ? billingAddress.name || '' : '');
+      var ship_street_address = document.getElementById('ship_street_address');
+      ship_street_address.value = (billingAddress ? billingAddress.streetAndNumber || '' : '');
+      var ship_city = document.getElementById('ship_city');
+      ship_city.value = billingAddress ? billingAddress.city || '' : '';
+      var ship_state = document.getElementById('ship_state');
+      ship_state.value = (billingAddress ? billingAddress.region || '' : '');
+      var ship_zip = document.getElementById('ship_zip');
+      ship_zip.value = (billingAddress ? billingAddress.postalCode || '' : '');
+      var ship_country = document.getElementById('ship_country');
+      ship_country.value = (billingAddress ? billingAddress.country || '' : '');
+
+      for(var i = 0; i < items.length; i++){
+        var input = document.createElement("input");
+        input.type = "hidden";
+        if(item[i].type === "Physical"){
+          input.value = 'product';
+        }else if(item[i].type === "Shipping"){
+          input.value = 'shipping';
+        }else{
+          input.value = item[i].type;
+        }
+        input.name = "li_"+i+"_type";
+        form.appendChild(input);
+
+        if(item[i].type === "Physical"){
+          input = document.createElement("input");
+          input.type = "hidden";
+          input.value = 'Y';
+          input.name = "li_"+i+"_tangible";
+          form.appendChild(input);  
+        }
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.value = item[i].name;
+        input.name = "li_"+i+"_name";
+        form.appendChild(input);
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.value = item[i].unitPrice; //amount
+        input.name = "li_"+i+"_price";
+        form.appendChild(input);
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.value = item[i].quantity;
+        input.name = "li_"+i+"_quantity";
+        form.appendChild(input);
+      }
   
       paymentDetails = {
         total: {
@@ -86,42 +174,43 @@ if (window.PaymentRequest) {
         })
       }
   
-      const options = {
-        requestPayerEmail: true,
-        requestPayerName: true
-      }
-      paymentRequest = new PaymentRequest(
-        supportedMethods,
-        paymentDetails,
-        options
-      )
+      // const options = {
+      //   requestPayerEmail: true,
+      //   requestPayerName: true
+      // }
+      // paymentRequest = new PaymentRequest(
+        // supportedMethods,
+        // paymentDetails,
+        // options
+      // )
     }
   
     // Add the buy button Event Listener
     const bindBuyButton = () => {
-      paymentRequest.canMakePayment()
-        .then(function (result) {
-          if (result) {
+      // paymentRequest.canMakePayment()
+        // .then(function (result) {
+          // if (result) {
             document.getElementById('pay')
               .addEventListener('click', onBuyClicked);
-          }
-        })
-        .catch(function (err) {
-          console.log(err)
-        })
+          // }
+        // })
+        // .catch(function (err) {
+          // console.log(err)
+        // })
     }
   
     // Add the event listener on the Buy button
-    const onBuyClicked = async () => {
+    const onBuyClicked = async (e) => {
+      // e.preventDefault();
       document.querySelector('#button_loader').classList.remove('hidden')
-      const canMakePayment = await paymentRequest.canMakePayment()
-      if (!canMakePayment) {
-        alert('Cant make payment')
-        return
-      }
+      // const canMakePayment = await paymentRequest.canMakePayment()
+      // if (!canMakePayment) {
+        // alert('Cant make payment')
+        // return
+      // }
       try {
-        const paymentRes = await paymentRequest.show()
-        await handlePayment(paymentRes)
+        // const paymentRes = await paymentRequest.show()
+        // await handlePayment(paymentRes)
       } catch (e) {
         console.log(e)
       } finally {
@@ -194,10 +283,10 @@ if (window.PaymentRequest) {
     }
   
   
-  } else {
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelector('#compatibility').classList.remove('hidden')
-      document.querySelector('#loader').classList.add('hidden')
-    })
+  // } else {
+  //   document.addEventListener("DOMContentLoaded", () => {
+  //     document.querySelector('#compatibility').classList.remove('hidden')
+  //     document.querySelector('#loader').classList.add('hidden')
+  //   })
   
-  }
+  // }

@@ -42,17 +42,38 @@
         </tfoot>
       </table>
       <div class="divider"></div>
-      <button class="center" id="pay">
-
-        <span id="button_loader" class="hidden">
-          <img src="{% static 'shop/images/white_loader.svg' %}" width="25" />
-        </span>
-        <span>
-          Pay with Google Pay
-        </span>
-      </button>
+      <form action='https://www.2checkout.com/checkout/purchase' id='form' method='post'>
+        <input type='hidden' name='sid' id='sid' value='1303908' />
+        <input type='hidden' name='mode' id="mode" value='2CO' />
+        <input type='hidden' name='card_holder_name' id='card_holder_name' />
+        <input type='hidden' name='street_address' id='street_address' />
+        <!-- <input type='hidden' name='street_address2' value='Suite 200' /> -->
+        <input type='hidden' name='city' id='city' />
+        <input type='hidden' name='state' id='state' />
+        <input type='hidden' name='zip' id='zip' />
+        <input type='hidden' name='country' id='country' />
+        <input type='hidden' name='ship_name' id='ship_name' />
+        <input type='hidden' name='ship_street_address' id='ship_street_address' />
+        <!-- <input type='hidden' name='ship_street_address2' value='Suite 200' /> -->
+        <input type='hidden' name='ship_city' id='ship_city' />
+        <input type='hidden' name='ship_state' id='ship_state' />
+        <input type='hidden' name='ship_zip' id='ship_zip' />
+        <input type='hidden' name='ship_country' id='ship_country' />
+        <input type='hidden' name='email' id='email' />
+        <input type='sessionId' name='sessionId' id='sessionId' />
+        <!-- <input type='hidden' name='phone' value='614-921-2450' /> -->
+        <button class="center" id="pay">
+            <span id="button_loader" class="hidden">
+              <img src="{% static 'shop/images/white_loader.svg' %}" width="25" />
+            </span>
+            <span>
+              Pay with 2Checkout.com
+            </span>
+          </button>
+        </form>
     </div>
   </div>
+  <script src="https://www.2checkout.com/static/checkout/javascript/direct.min.js"></script>
 </body>
 
 </html>

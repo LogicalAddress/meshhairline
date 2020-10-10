@@ -20,6 +20,8 @@ def twoCheckoutCo(request):
 
 
 def customConfirmPayment(request):
+
+    #TODO: Validate the request was approved by your payment gateway (in this case 2checkout.com)
     paymentSessionId = request.GET['sessionId']
     data = {
         'paymentSessionId': paymentSessionId,
@@ -68,3 +70,8 @@ def customRefundPayment(request):
         }, status=200)
     else:
         return JSONResponse(None, status=500)
+
+
+def customAfterPayment(request):
+    print(request.POST)
+    return JSONResponse(None, status=200)
