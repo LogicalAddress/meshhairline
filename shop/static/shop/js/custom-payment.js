@@ -116,17 +116,17 @@
       for(var i = 0; i < items.length; i++){
         var input = document.createElement("input");
         input.type = "hidden";
-        if(item[i].type === "Physical"){
+        if(items[i].type === "Physical"){
           input.value = 'product';
-        }else if(item[i].type === "Shipping"){
+        }else if(items[i].type === "Shipping"){
           input.value = 'shipping';
         }else{
-          input.value = item[i].type;
+          input.value = items[i].type;
         }
         input.name = "li_"+i+"_type";
         form.appendChild(input);
 
-        if(item[i].type === "Physical"){
+        if(items[i].type === "Physical"){
           input = document.createElement("input");
           input.type = "hidden";
           input.value = 'Y';
@@ -136,19 +136,19 @@
 
         input = document.createElement("input");
         input.type = "hidden";
-        input.value = item[i].name;
+        input.value = items[i].name;
         input.name = "li_"+i+"_name";
         form.appendChild(input);
 
         input = document.createElement("input");
         input.type = "hidden";
-        input.value = item[i].unitPrice; //amount
+        input.value = items[i].unitPrice; //amount
         input.name = "li_"+i+"_price";
         form.appendChild(input);
 
         input = document.createElement("input");
         input.type = "hidden";
-        input.value = item[i].quantity;
+        input.value = items[i].quantity;
         input.name = "li_"+i+"_quantity";
         form.appendChild(input);
       }
