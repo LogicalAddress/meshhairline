@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 import requests
 import os
+from common.models import WebsiteSettings
 
 class JSONResponse(HttpResponse):
 	"""An HttpResponse that renders its content into JSON."""
@@ -19,8 +20,29 @@ def twoCheckoutCo(request):
 
 
 def customConfirmPayment(request):
-    pass
-
+    paymentSessionId = request.GET['sessionId']
+    data = {
+        'paymentSessionId': paymentSessionId,
+        'state': 'processed',
+        'transactionId': request.POST.get('requestId'),
+        'instructions': 'Your payment will appear on your statement in the coming days',
+        'links': {
+            'refunds': 'https://meshhairline.com/custom-refund?transactionId=' + request.POST.get('requestId')
+        },
+    }
+    url = os.environ.get('SNIPCART_PAYMENT_URL', 'https://payment.snipcart.com') + '/api/private/custom-payment-gateway/payment'
+    settings = WebsiteSettings.objects.filter()[0]
+    print("testing...")
+    print(settings)
+    headers = {'Authorization': 'Bearer ' + settings.snipcart_private_key}
+    req = requests.post(url, data=data, headers=headers)
+    if req.status_code == 200:
+        res = req.json()
+        return JSONResponse({
+            'returnUrl': res['returnUrl']
+        }, status=200)
+    else:
+        return JSONResponse(None, status=500)
 
 def customPaymentSession(request):
     publicToken = request.GET['publicToken']

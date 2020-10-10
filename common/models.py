@@ -25,6 +25,13 @@ class WebsiteSettings(BaseSetting):
         help_text='Your Snipcart public API key'
     )
 
+    snipcart_private_key = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text='Your Snipcart private API key'
+    )
+
     logo_url = models.CharField(
         max_length=255,
         blank=True,
