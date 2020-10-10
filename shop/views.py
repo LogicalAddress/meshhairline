@@ -27,7 +27,7 @@ def customConfirmPayment(request):
         'transactionId': request.POST.get('requestId'),
         'instructions': 'Your payment will appear on your statement in the coming days',
         'links': {
-            'refunds': 'https://meshhairline.com/custom-refund?transactionId=' + request.POST.get('requestId')
+            'refunds': 'https://meshhairline.com/custom-refund/?transactionId=' + request.POST.get('requestId')
         },
     }
     url = os.environ.get('SNIPCART_PAYMENT_URL', 'https://payment.snipcart.com') + '/api/private/custom-payment-gateway/payment'
@@ -52,5 +52,19 @@ def customPaymentSession(request):
     if req.status_code == 200:
         res = req.json()
         return JSONResponse(res, status=200)
+    else:
+        return JSONResponse(None, status=500)
+
+def customRefundPayment(request):
+    transactionId = request.GET['transactionId']
+    publicToken = request.POST.get('publicToken')
+    url = os.environ.get('SNIPCART_PAYMENT_URL', 'https://payment.snipcart.com') + '/api/public/custom-payment-gateway/validate?publicToken=' + publicToken
+    req = requests.get(url, headers=None)
+    if req.status_code == 200:
+        # TODO: Refund the order via 2checkout
+        res = req.json()
+        return JSONResponse({
+            'refundId': transactionId
+        }, status=200)
     else:
         return JSONResponse(None, status=500)
