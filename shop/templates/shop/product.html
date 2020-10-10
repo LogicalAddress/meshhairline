@@ -155,7 +155,7 @@
     /*
     {% if request.user.id %}
     */
-    window.update = async function() {
+    window.updatexx = async function() {
         console.log("running snipcart updates");
         try {
             console.log({ name: '{{ request.user.username|title }}',email: '{{ request.user.email }}' });
@@ -247,7 +247,7 @@
             // }
         });
     }
-    document.addEventListener('snipcart.ready', asyncCall);
+    // document.addEventListener('snipcart.ready', asyncCall);
     // Snipcart.subscribe('ready', function() {
     // document.addEventListener('snipcart.ready', function() {
     //         Snipcart.api.cart.update({
