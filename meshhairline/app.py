@@ -39,7 +39,11 @@ class SnipcartHook(APIView):
         try:
             if request.data['eventName'] == "order.completed":
                 payment_gateway="snipcart"
-                user = User.objects.get(email=request.data['content']['email'])
+                user = None
+                try:
+                    user = User.objects.get(email=request.data['content']['email'])
+                except Exception as e:
+                    user = User.objects.get(pk=1)
                 unique_items = len(request.data['content']['items'])
                 # quantity = [sum(x.quantity) for x in request.data['content']['items']]
                 quantity = request.data['content']['itemsCount']
@@ -47,7 +51,7 @@ class SnipcartHook(APIView):
                 currency = request.data['content']['currency'].upper()
                 tx = request.data['content']['paymentTransactionId'] or request.data['content']['token']
                 order = Order(title=tx, 
-                    email=user.email, 
+                    email=request.data['content']['email'], 
                     username=user.username, unique_items=unique_items,
                     author=user,
                     quantity=quantity, total=total, payment_gateway=payment_gateway,
@@ -57,7 +61,7 @@ class SnipcartHook(APIView):
                 for item in request.data['content']['items']:
                     product = Product.objects.get(pk=item['id'])
                     oi = OrderItem(order=order, product=product, seller=product.seller,
-                    title=product.title, email=user.email, username=user.username,
+                    title=product.title, email=request.data['content']['email'], username=user.username,
                     quantity=item['quantity'], total=item['totalPrice'], buyer=user,
                     currency=currency,
                     price=item['unitPrice'], payment_gateway=payment_gateway,ref=item['uniqueId'])
