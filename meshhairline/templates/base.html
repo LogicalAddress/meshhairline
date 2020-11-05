@@ -47,7 +47,25 @@
 
     <body class="{% block body_class %}{% endblock %}">
         <div class="uk-offcanvas-content">
-        <div id="snipcart" data-api-key="{{ settings.common.WebsiteSettings.snipcart_api_key }}" hidden></div>
+        <div id="snipcart" data-api-key="{{ settings.common.WebsiteSettings.snipcart_api_key }}" hidden>
+            <!--
+                <snipcart-form @submit="save" id="snipcart-billing-form">
+                <overridable name="billing">
+                    <div class="snipcart__box">
+                        <fieldset class="snipcart-form__set">
+                            <div class="snipcart-form__field">
+                                <snipcart-label class="snipcart__font--tiny" for="email">
+                                </snipcart-label>
+                                <snipcart-input type="text" name="email" value="retnan@live.com"> </snipcart-input>
+                                <snipcart-error-message name="email"></snipcart-error-message>
+                            </div>
+                        </fieldset>
+                    </div>
+                </overridable>
+            </snipcart-form>  
+        -->       
+        </div>
+        
         {% wagtailuserbar %}
 
         {% if page and page.header %}
@@ -74,7 +92,7 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', async function() {
                 customFields = document.querySelector('.custom-field-select');
                 if(customFields){
                     document.querySelector('.custom-field-select').onchange = function(event) {
@@ -83,6 +101,20 @@
                                 .dataset['itemCustom' + event.target.dataset.field + 'Value'] = event.target.value;
                         }
                     };
+                }
+
+                try {
+                    await Snipcart.api.cart.update({
+                        email: 'john.doe@example.com',
+                        metadata: {
+                            customMetadataKey: 'value'
+                        },
+                        billingAddress:{
+                            name: 'John Doe'
+                        }
+                    });
+                } catch (error) {
+                    console.log({error});
                 }
             },false);
         </script>
