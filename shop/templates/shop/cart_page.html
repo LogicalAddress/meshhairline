@@ -49,12 +49,16 @@
         </table>
         <div>
         <!-- <button class="uk-button button-def"> Checkout with Stripe</button> -->
+        {% if request.user.is_authenticated %}
         {% routablepageurl page 'checkout' as verify %}
         <form action="{{verify}}" method="POST" id="ahpaystack">
             {% csrf_token %}
             {% paystack_button redirect_url=verify button_class="uk-button button-def" amount=cart.total email=request.user.email %}
             </form>
-        </div>
+        {% else %}
+        <a href="{% url 'account_login' %}">Sign in or register to checkout</a>
+        {% endif %}
+        </div> 
     </div>
     <div class="uk-clearfix"></div>
     {% else %}
