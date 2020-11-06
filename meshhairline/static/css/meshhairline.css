@@ -101,3 +101,7 @@ footer p, footer a{
 .snipcart-cart__footer-col footer{
   position: unset;
 }
+
+.snipcart-payment-methods-list-item:nth-child(2) {
+  display: none;
+}
