@@ -26,7 +26,7 @@
                                     {% image product.link_page.image fill-320x240 %}
                                 </div>
                                 <div class="uk-card-body uk-text-center">
-                                    <p class="uk-h4 uk-text-right" style="margin-right: 10px;">{{ product.title }}</p>
+                                    <p class="uk-h4 uk-text-right" style="margin-right: 10px;">{% firstof product.link_page product.title %}</p>
                                     {% currency_price product.link_page.price request.session.currency as price %}
                                     {% currency_symbol request.session.currency as currency %}
                                     <p class="uk-margin-remove uk-text-right">{{currency}}{{ price|intcomma }}</p>
