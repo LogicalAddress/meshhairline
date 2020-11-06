@@ -243,13 +243,14 @@ class Collection(CollectionMixin, Page):
     def get_context(self, request):
         context = super().get_context(request)
         context['products'] = Product.objects.child_of(self).live()
+        context['page'] = self
         return context
 
     class Meta:
         verbose_name_plural = 'collections'
         verbose_name = 'collection'
 
-class ProductCategory(Page):
+class ProductCategory(CollectionMixin, Page):
     icon = models.ForeignKey(
         'wagtailimages.Image', null=True, blank=True,
         on_delete=models.SET_NULL, related_name='+'
@@ -259,6 +260,12 @@ class ProductCategory(Page):
         ImageChooserPanel('icon'),
         InlinePanel('featured_products', label="Featured Products"),
     ]
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        context['products'] = Product.objects.child_of(self).live()
+        context['page'] = self
+        return context
 
     class Meta:
         verbose_name_plural = 'product categories'
