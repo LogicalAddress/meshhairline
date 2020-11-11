@@ -11,6 +11,10 @@ tail /home/ubuntu/.cargospace/meshhairline.com.log
 ```sh
 cat /home/ubuntu/.cargospace/meshhairline.com.sh
 ```
+- Source Code: 
+```sh
+cd /home/ubuntu/meshhairline.com/
+```
 - Systemd
 
 # Domain Registrar (see email for access information)
