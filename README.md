@@ -16,6 +16,7 @@ cat /home/ubuntu/.cargospace/meshhairline.com.sh
 cd /home/ubuntu/meshhairline.com/
 ```
 - Systemd
+- Nginx
 
 # Domain Registrar (see email for access information)
 ```sh
